@@ -1,7 +1,6 @@
 extends Node
 
 
-
 ## Словарь с определением всех таблиц базы данных
 const TABLE_DEFINITIONS = {
 	"maps": {
