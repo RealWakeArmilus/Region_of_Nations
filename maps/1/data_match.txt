@@ -1,0 +1,69 @@
+{
+	"maps": {
+		"nations": [
+			{"name": "Римляне", "countries": [
+				{"name": "Римская империя", "ruler": {"username": "Луций Корнелий Сулла", "unique_id": "1001"}, "provinces": [
+					{"name": "Рим", "government": {"username": "Луций Корнелий Сулла", "unique_id": "1001"}, "regions": [
+						{"name": "Misenum", "color_recognition": "#C20003", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Beneventum", "color_recognition": "#E20004", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Neapolis", "color_recognition": "#EA0307", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Rome", "color_recognition": "#FB0004", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Ausculim", "color_recognition": "#F30004", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Volsonii", "color_recognition": "#EA0004", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Arretioum", "color_recognition": "#FA0004", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Ancona", "color_recognition": "#FF0004", "color_view": "#FB0004", "flag": "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000}
+					]}
+				]}
+			]}, 
+			{"name": "Этрусски", "countries": [
+				{"name": "Царство Этрусков", "ruler": {"username": "Зилато Лукумон", "unique_id": "1002"}, "provinces": [
+					{"name": "Лидский берег", "government": {"username": "Зилато Лукумон", "unique_id": "1002"}, "regions": [
+						{"name": "Ariminum", "color_recognition": "#C25100", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Pisae", "color_recognition": "#E25E00", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Ravenna", "color_recognition": "#EA7A03", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Patavium", "color_recognition": "#FF8400", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Bononia", "color_recognition": "#F38A00", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Placentia", "color_recognition": "#FA8100", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Cemenelum", "color_recognition": "#EA6D00", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Genua", "color_recognition": "#FB8E00", "color_view": "#FB8E00", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000}
+					]}
+				]}
+			]}, 
+			{"name": "Галлы", "countries": [
+				{"name": "Галлия", "ruler": {"username": "Бренн Стойкий", "unique_id": "1003"}, "provinces": [
+					{"name": "Галльские равнины", "government": {"username": "Бренн Стойкий", "unique_id": "1003"}, "regions": [
+						{"name": "Pola", "color_recognition": "#683600", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#683600\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Tegeste", "color_recognition": "#553102", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#683600\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Aquileia", "color_recognition": "#763D00", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#683600\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Verona", "color_recognition": "#622901", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#683600\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Mediolanum", "color_recognition": "#7E4800", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Taurinorum", "color_recognition": "#572400", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Augusta", "color_recognition": "#5F2D00", "color_view": "#683600", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000}
+					]}
+				]}
+			]}, 
+			{"name": "Греки", "countries": [
+				{"name": "Греческие территории", "ruler": {"username": "Архонт Дамипп Кротонский", "unique_id": "1004"}, "provinces": [
+					{"name": "Греческая колония", "government": {"username": "Архонт Дамипп Кротонский", "unique_id": "1004"}, "regions": [
+						{"name": "Regiom", "color_recognition": "#0051FF", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Croton", "color_recognition": "#004AEA", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Thurii", "color_recognition": "#004DF3", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Tarantum", "color_recognition": "#034CEA", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Brundisium", "color_recognition": "#0047E2", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Isium-Tarent", "color_recognition": "#003DC2", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Paestum", "color_recognition": "#0050FB", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000},
+						{"name": "Laus", "color_recognition": "#0051FA", "color_view": "#0051FA", "flag": "{\"flag_slot_1\": \"#0040CB\", \"flag_slot_2\": \"#FFFFFF\"}", "budget": 1000000}
+					]}
+				]}
+			]}
+		]
+	},
+	"date": {
+		"match_info": {"id": 1, "name": "Birth of the Roman Empire", "map_id": 1, "is_campaign": 1, "start_time_world": "{'F': 1, 'M': 1, 'Y': 58}", "current_time_world": "{'F': 1, 'M': 1, 'Y': 58}", "finish_time_world": "{'F': 3, 'M': 12, 'Y': 27}", "time_speed": 20, "passing_time": 0},
+		"general": {
+			"salaries_in_regions": {"min_salary": 50, "max_salary": 150},
+			"profitability_of_goods_in_regions": {"procent": 500},
+			"population_groups": {"total_people": 50, "capital": 500000}
+		}
+	}
+}

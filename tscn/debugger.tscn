@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://crfmdld5wm2gs"]
+
+[ext_resource type="Script" uid="uid://ba2cvuahqe4ya" path="res://gd/debugger.gd" id="1_xq56d"]
+[ext_resource type="Texture2D" uid="uid://cg7fjplr4h5rt" path="res://image/button/close.svg" id="2_h6nw6"]
+
+[node name="Debugger" type="VBoxContainer"]
+offset_right = 74.0
+offset_bottom = 137.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 15
+script = ExtResource("1_xq56d")
+
+[node name="FPS" type="Label" parent="."]
+layout_mode = 2
+text = "FPS: "
+
+[node name="CPU" type="Label" parent="."]
+layout_mode = 2
+text = "CPU: "
+
+[node name="GPU" type="Label" parent="."]
+layout_mode = 2
+text = "GPU: "
+
+[node name="MEM" type="Label" parent="."]
+layout_mode = 2
+text = "Memory: "
+
+[node name="Close" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture_normal = ExtResource("2_h6nw6")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Close" to="." method="_on_close_Debugger_pressed"]

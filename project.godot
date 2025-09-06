@@ -1,0 +1,45 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Region of Nation"
+config/version="Beta-0.0.1.0"
+run/main_scene="uid://bwg0ykp1bp7jr"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+config/icon="uid://xwh0qiden7fv"
+
+[autoload]
+
+AppData="*res://gd/app_data.gd"
+MyButtons="*res://gd/my_buttons.gd"
+CurrentData="*res://gd/current_data.gd"
+Website_API="*res://gd/website_api.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
+window/size/initial_position_type=3
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/canvas_textures/default_texture_filter=2
+
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

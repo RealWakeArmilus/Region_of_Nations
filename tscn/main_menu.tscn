@@ -1,0 +1,490 @@
+[gd_scene load_steps=12 format=3 uid="uid://c2mk3p2sawbxj"]
+
+[ext_resource type="Script" uid="uid://b55hs2kq5ji6s" path="res://gd/main_menu.gd" id="1_ra1sj"]
+[ext_resource type="Texture2D" uid="uid://sxwteryeavq4" path="res://image/background/2.png" id="2_p6scp"]
+[ext_resource type="Texture2D" uid="uid://ddov1i67jdsd0" path="res://image/substrates/names.png" id="3_gwonb"]
+[ext_resource type="Texture2D" uid="uid://c7vcc882rxwxs" path="res://image/icon/links/website.png" id="3_olkwg"]
+[ext_resource type="Texture2D" uid="uid://da5j1xk1xdbmq" path="res://image/button/back.svg" id="4_cpdt8"]
+[ext_resource type="Texture2D" uid="uid://cn3tomuacyx01" path="res://image/button/button.svg" id="4_gwonb"]
+[ext_resource type="Texture2D" uid="uid://1btgv4eoricq" path="res://image/icon/links/telegram.png" id="4_ra1sj"]
+[ext_resource type="AudioStream" uid="uid://ctx2jje8wk8w" path="res://audio/screensaver_1.mp3" id="6_p6scp"]
+
+[sub_resource type="FontVariation" id="FontVariation_p6scp"]
+variation_embolden = 0.55
+
+[sub_resource type="FontVariation" id="FontVariation_olkwg"]
+variation_embolden = 0.5
+variation_transform = Transform2D(1, 0.05, 0, 1, 0, 0)
+spacing_glyph = 5
+
+[sub_resource type="Theme" id="Theme_gwonb"]
+default_font = SubResource("FontVariation_olkwg")
+
+[node name="main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ra1sj")
+
+[node name="background" type="TextureRect" parent="."]
+self_modulate = Color(0.762404, 0.762404, 0.762403, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p6scp")
+expand_mode = 2
+
+[node name="info" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="menu" type="VBoxContainer" parent="info"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 100
+
+[node name="name_game" type="Label" parent="info/menu"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = SubResource("FontVariation_p6scp")
+theme_override_font_sizes/font_size = 78
+text = "Region of Nations"
+vertical_alignment = 1
+
+[node name="buttons" type="BoxContainer" parent="info/menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = SubResource("Theme_gwonb")
+theme_override_constants/separation = 20
+vertical = true
+
+[node name="campaign" type="TextureButton" parent="info/menu/buttons"]
+self_modulate = Color(0.244776, 0.244776, 0.244776, 1)
+custom_minimum_size = Vector2(700, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_hover = ExtResource("3_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="info/menu/buttons/campaign"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Одиночная игра"
+vertical_alignment = 1
+
+[node name="shop" type="TextureButton" parent="info/menu/buttons"]
+self_modulate = Color(0.244776, 0.244776, 0.244776, 1)
+custom_minimum_size = Vector2(700, 60)
+layout_mode = 2
+size_flags_vertical = 4
+texture_hover = ExtResource("3_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="info/menu/buttons/shop"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Магазин"
+vertical_alignment = 1
+
+[node name="setting" type="TextureButton" parent="info/menu/buttons"]
+self_modulate = Color(0.244776, 0.244776, 0.244776, 1)
+custom_minimum_size = Vector2(700, 60)
+layout_mode = 2
+size_flags_vertical = 4
+texture_hover = ExtResource("3_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="info/menu/buttons/setting"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Настройки"
+vertical_alignment = 1
+
+[node name="about_author" type="TextureButton" parent="info/menu/buttons"]
+self_modulate = Color(0.244776, 0.244776, 0.244776, 1)
+custom_minimum_size = Vector2(700, 60)
+layout_mode = 2
+size_flags_vertical = 4
+texture_hover = ExtResource("3_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="info/menu/buttons/about_author"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Об авторе"
+vertical_alignment = 1
+
+[node name="links" type="BoxContainer" parent="info"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 25
+
+[node name="website" type="TextureButton" parent="info/links"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("3_olkwg")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="telegram" type="TextureButton" parent="info/links"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("4_ra1sj")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="version" type="Label" parent="info"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 36
+text = "v0.1"
+
+[node name="game" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Panel" type="Panel" parent="game"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="title" type="BoxContainer" parent="game/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="back_info" type="Button" parent="game/Panel/title"]
+layout_mode = 2
+keep_pressed_outside = true
+icon = ExtResource("4_cpdt8")
+flat = true
+
+[node name="Label" type="Label" parent="game/Panel/title"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Выберите карту"
+
+[node name="maps" type="VBoxContainer" parent="game"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+
+[node name="campaign" type="TextureButton" parent="game/maps"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="game/maps/campaign"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Обучение"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="version" type="Label" parent="game"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 36
+text = "v0.1"
+
+[node name="campaign" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Panel" type="Panel" parent="campaign"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="title" type="BoxContainer" parent="campaign/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="back_game" type="Button" parent="campaign/Panel/title"]
+layout_mode = 2
+icon = ExtResource("4_cpdt8")
+flat = true
+
+[node name="Label" type="Label" parent="campaign/Panel/title"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Выберите нацию"
+
+[node name="questions" type="VBoxContainer" parent="campaign"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+
+[node name="buttons" type="BoxContainer" parent="campaign/questions"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+vertical = true
+
+[node name="load" type="TextureButton" parent="campaign/questions/buttons"]
+custom_minimum_size = Vector2(800, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="campaign/questions/buttons/load"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Загрузить"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="new" type="TextureButton" parent="campaign/questions/buttons"]
+custom_minimum_size = Vector2(800, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="campaign/questions/buttons/new"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Начать заново"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="nations" type="VBoxContainer" parent="campaign"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 100
+
+[node name="buttons" type="BoxContainer" parent="campaign/nations"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+vertical = true
+
+[node name="Римляне" type="TextureButton" parent="campaign/nations/buttons"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="campaign/nations/buttons/Римляне"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Римляне"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Этрусски" type="TextureButton" parent="campaign/nations/buttons"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="campaign/nations/buttons/Этрусски"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Этрусски"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Галлы" type="TextureButton" parent="campaign/nations/buttons"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="campaign/nations/buttons/Галлы"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Галлы"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Греки" type="TextureButton" parent="campaign/nations/buttons"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_gwonb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="campaign/nations/buttons/Греки"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Греки"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="version" type="Label" parent="campaign"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 36
+text = "v0.1"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_p6scp")
+volume_db = -10.0
+autoplay = true
+
+[connection signal="pressed" from="info/menu/buttons/campaign" to="." method="_on_game_pressed"]
+[connection signal="pressed" from="info/links/website" to="." method="_on_website_pressed"]
+[connection signal="pressed" from="info/links/telegram" to="." method="_on_telegram_pressed"]
+[connection signal="pressed" from="game/Panel/title/back_info" to="." method="_on_back_info_pressed"]
+[connection signal="pressed" from="game/maps/campaign" to="." method="_on_campaign_pressed"]
+[connection signal="pressed" from="campaign/Panel/title/back_game" to="." method="_on_back_game_pressed"]
+[connection signal="pressed" from="campaign/questions/buttons/load" to="." method="_on_load_campaign_pressed"]
+[connection signal="pressed" from="campaign/questions/buttons/new" to="." method="_on_new_campaign_pressed"]

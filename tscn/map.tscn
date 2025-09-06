@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://gnnspj2ql1av"]
+
+[ext_resource type="Script" uid="uid://cb2taofn0wqwh" path="res://gd/tables.gd" id="1_x0n1c"]
+[ext_resource type="Script" uid="uid://b0ig7xltgjnkq" path="res://gd/game_initializer.gd" id="2_e2bhf"]
+[ext_resource type="Script" uid="uid://dnt03dgnyu8dq" path="res://gd/generation_map.gd" id="3_1f6fc"]
+[ext_resource type="Script" uid="uid://cmndd6vt05py3" path="res://gd/database_manager.gd" id="4_bhkyt"]
+[ext_resource type="PackedScene" uid="uid://bqp7to6gmk3bv" path="res://tscn/player.tscn" id="5_ghqhn"]
+
+[node name="map" type="Node2D"]
+
+[node name="default_data" type="Node" parent="."]
+script = ExtResource("1_x0n1c")
+
+[node name="game_initializer" type="Node" parent="."]
+script = ExtResource("2_e2bhf")
+
+[node name="generation_map" type="Node" parent="." node_paths=PackedStringArray("regions_image", "cities_image")]
+script = ExtResource("3_1f6fc")
+regions_image = NodePath("../sprites/regions_image")
+cities_image = NodePath("../sprites/cities_image")
+
+[node name="database_manager" type="Node" parent="."]
+script = ExtResource("4_bhkyt")
+
+[node name="Player" parent="." instance=ExtResource("5_ghqhn")]
+
+[node name="map_image" type="Sprite2D" parent="."]
+
+[node name="sprites" type="Node2D" parent="."]
+
+[node name="regions_image" type="Sprite2D" parent="sprites"]
+visible = false
+
+[node name="cities_image" type="Sprite2D" parent="sprites"]
+visible = false
+
+[node name="regions" type="Node2D" parent="."]

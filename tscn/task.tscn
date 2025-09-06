@@ -1,0 +1,741 @@
+[gd_scene load_steps=10 format=3 uid="uid://cm1cttcwd61xf"]
+
+[ext_resource type="Texture2D" uid="uid://c4l3s16p0kyol" path="res://image/substrates/task/0.png" id="1_3oiou"]
+[ext_resource type="Script" uid="uid://b7jywhos4e4qo" path="res://gd/task.gd" id="2_sfl58"]
+[ext_resource type="Texture2D" uid="uid://b3ldx84q42b11" path="res://image/icon/goods/0.png" id="3_itv5y"]
+[ext_resource type="Texture2D" uid="uid://jvrwpw2nj8ib" path="res://image/icon/specializations/2.png" id="3_sfl58"]
+[ext_resource type="Texture2D" uid="uid://b788by2oyetf2" path="res://image/icon/button/cancel.png" id="4_itv5y"]
+[ext_resource type="Texture2D" uid="uid://d2n4ssiw7kqc0" path="res://image/point.png" id="4_jqvig"]
+[ext_resource type="Texture2D" uid="uid://csi4q0yhy8433" path="res://image/icon/button/resert.png" id="5_jqvig"]
+[ext_resource type="Texture2D" uid="uid://bsu4iojqpv6cm" path="res://image/substrates/button/action.png" id="7_sfl58"]
+[ext_resource type="Script" uid="uid://bb186posgvwwk" path="res://gd/scroll_container.gd" id="8_jqvig"]
+
+[node name="task" type="TextureRect"]
+custom_minimum_size = Vector2(742, 75)
+texture = ExtResource("1_3oiou")
+script = ExtResource("2_sfl58")
+material_slot_0_icon = ExtResource("3_itv5y")
+icon_goods_path = "res://image/icon/goods/{0}.png"
+icon_specializations_path = "res://image/icon/specializations/{0}.png"
+
+[node name="modes" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 21
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 21
+theme_override_constants/margin_bottom = 7
+
+[node name="idle" type="HBoxContainer" parent="modes"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="good" type="HBoxContainer" parent="modes/idle"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="icon" type="TextureRect" parent="modes/idle/good"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+expand_mode = 1
+
+[node name="details" type="VBoxContainer" parent="modes/idle/good"]
+custom_minimum_size = Vector2(100, 45)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="name" type="Label" parent="modes/idle/good/details"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Название"
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="count" type="HBoxContainer" parent="modes/idle/good/details"]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="text" type="Label" parent="modes/idle/good/details/count"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "0"
+horizontal_alignment = 2
+
+[node name="title" type="Label" parent="modes/idle/good/details/count"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "ед."
+horizontal_alignment = 2
+
+[node name="cost_price" type="HBoxContainer" parent="modes/idle/good/details"]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 2
+
+[node name="text" type="Label" parent="modes/idle/good/details/cost_price"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "0"
+horizontal_alignment = 2
+
+[node name="title" type="Label" parent="modes/idle/good/details/cost_price"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "$"
+horizontal_alignment = 2
+
+[node name="material_costs" type="HBoxContainer" parent="modes/idle"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="0" type="VBoxContainer" parent="modes/idle/material_costs"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="icon" type="TextureRect" parent="modes/idle/material_costs/0"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("4_jqvig")
+expand_mode = 1
+
+[node name="count" type="Label" parent="modes/idle/material_costs/0"]
+self_modulate = Color(0.486275, 0.466667, 0.411765, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="1" type="VBoxContainer" parent="modes/idle/material_costs"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="icon" type="TextureRect" parent="modes/idle/material_costs/1"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("4_jqvig")
+expand_mode = 1
+
+[node name="count" type="Label" parent="modes/idle/material_costs/1"]
+self_modulate = Color(0.486275, 0.466667, 0.411765, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="2" type="VBoxContainer" parent="modes/idle/material_costs"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="icon" type="TextureRect" parent="modes/idle/material_costs/2"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("4_jqvig")
+expand_mode = 1
+
+[node name="count" type="Label" parent="modes/idle/material_costs/2"]
+self_modulate = Color(0.486275, 0.466667, 0.411765, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="3" type="VBoxContainer" parent="modes/idle/material_costs"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="icon" type="TextureRect" parent="modes/idle/material_costs/3"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("4_jqvig")
+expand_mode = 1
+
+[node name="count" type="Label" parent="modes/idle/material_costs/3"]
+self_modulate = Color(0.486275, 0.466667, 0.411765, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="4" type="VBoxContainer" parent="modes/idle/material_costs"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="icon" type="TextureRect" parent="modes/idle/material_costs/4"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("4_jqvig")
+expand_mode = 1
+
+[node name="count" type="Label" parent="modes/idle/material_costs/4"]
+self_modulate = Color(0.486275, 0.466667, 0.411765, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="workers" type="Control" parent="modes/idle"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+
+[node name="1" type="VBoxContainer" parent="modes/idle/workers"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_top = -20.5
+offset_right = 12.5
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="speciality" type="TextureRect" parent="modes/idle/workers/1"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("3_sfl58")
+expand_mode = 1
+
+[node name="count" type="Label" parent="modes/idle/workers/1"]
+self_modulate = Color(0.486275, 0.466667, 0.411765, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="progress" type="Control" parent="modes/idle"]
+custom_minimum_size = Vector2(175, 60)
+layout_mode = 2
+
+[node name="details" type="VBoxContainer" parent="modes/idle/progress"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_top = -20.5
+offset_right = 12.5
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="progress_bar" type="ProgressBar" parent="modes/idle/progress/details"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+
+[node name="period_in_months" type="HBoxContainer" parent="modes/idle/progress/details"]
+modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="current" type="Label" parent="modes/idle/progress/details/period_in_months"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="_" type="Label" parent="modes/idle/progress/details/period_in_months"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "/"
+
+[node name="required" type="Label" parent="modes/idle/progress/details/period_in_months"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="title" type="Label" parent="modes/idle/progress/details/period_in_months"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "мес."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="action" type="Control" parent="modes/idle"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="cansel" type="TextureButton" parent="modes/idle/action"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_top = -12.5
+offset_right = 12.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_itv5y")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="resert" type="TextureButton" parent="modes/idle/action"]
+visible = false
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_top = -12.5
+offset_right = 12.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_jqvig")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="period_production" type="Control" parent="modes/idle"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="details" type="BoxContainer" parent="modes/idle/period_production"]
+modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="title" type="Label" parent="modes/idle/period_production/details"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "срок производства:"
+
+[node name="count" type="Label" parent="modes/idle/period_production/details"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "0"
+
+[node name="monh" type="Label" parent="modes/idle/period_production/details"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "мес."
+
+[node name="stocks" type="ScrollContainer" parent="modes/idle"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+script = ExtResource("8_jqvig")
+scroll_direction = 1
+
+[node name="list" type="HBoxContainer" parent="modes/idle/stocks"]
+custom_minimum_size = Vector2(340, 61)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="cost_price_material" type="Control" parent="modes/idle"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+
+[node name="details" type="VBoxContainer" parent="modes/idle/cost_price_material"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="title" type="Label" parent="modes/idle/cost_price_material/details"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Итого:"
+horizontal_alignment = 2
+
+[node name="money" type="HBoxContainer" parent="modes/idle/cost_price_material/details"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 2
+
+[node name="count" type="Label" parent="modes/idle/cost_price_material/details/money"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0"
+horizontal_alignment = 2
+
+[node name="$" type="Label" parent="modes/idle/cost_price_material/details/money"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "$"
+
+[node name="error" type="Control" parent="modes"]
+layout_mode = 2
+
+[node name="raw_materials_out_of_stock" type="BoxContainer" parent="modes/error"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -30.5
+offset_right = 350.0
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+vertical = true
+
+[node name="title" type="Label" parent="modes/error/raw_materials_out_of_stock"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Сырьё по такой себестоимости закончилось"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="insufficient_funds" type="BoxContainer" parent="modes/error"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -30.5
+offset_right = 350.0
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+vertical = true
+
+[node name="title" type="Label" parent="modes/error/insufficient_funds"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Недостаточно средств у компании в регионе"
+horizontal_alignment = 1
+
+[node name="ok" type="TextureButton" parent="modes/error/insufficient_funds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture_normal = ExtResource("7_sfl58")
+
+[node name="Label" type="Label" parent="modes/error/insufficient_funds/ok"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Хорошо"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="notifical" type="Control" parent="modes"]
+visible = false
+layout_mode = 2
+
+[node name="no_material_costs_required" type="BoxContainer" parent="modes/notifical"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -30.5
+offset_right = 350.0
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+vertical = true
+
+[node name="title" type="Label" parent="modes/notifical/no_material_costs_required"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Не требуется"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="workers_stage" type="HBoxContainer" parent="modes"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="personal" type="HBoxContainer" parent="modes/workers_stage"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="icon" type="TextureRect" parent="modes/workers_stage/personal"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+expand_mode = 1
+
+[node name="details" type="VBoxContainer" parent="modes/workers_stage/personal"]
+custom_minimum_size = Vector2(100, 45)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="name" type="Label" parent="modes/workers_stage/personal/details"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Название"
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="count" type="Label" parent="modes/workers_stage/personal/details"]
+self_modulate = Color(0.514274, 0.502798, 0.453205, 1)
+custom_minimum_size = Vector2(100, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 2
+
+[node name="salary" type="VBoxContainer" parent="modes/workers_stage"]
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+alignment = 1
+
+[node name="title" type="Label" parent="modes/workers_stage/salary"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Сколько вы платите каждому, за выполнение задачи, за 1x период:"
+
+[node name="count" type="LineEdit" parent="modes/workers_stage/salary"]
+custom_minimum_size = Vector2(340, 20)
+layout_mode = 2
+alignment = 1
+max_length = 6
+
+[node name="salary_total" type="Control" parent="modes/workers_stage"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+
+[node name="details" type="VBoxContainer" parent="modes/workers_stage/salary_total"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="title" type="Label" parent="modes/workers_stage/salary_total/details"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Итого:"
+horizontal_alignment = 2
+
+[node name="money" type="HBoxContainer" parent="modes/workers_stage/salary_total/details"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 2
+
+[node name="count" type="Label" parent="modes/workers_stage/salary_total/details/money"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0"
+horizontal_alignment = 2
+
+[node name="$" type="Label" parent="modes/workers_stage/salary_total/details/money"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "$"
+
+[node name="series" type="HBoxContainer" parent="modes"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="x" type="ScrollContainer" parent="modes/series"]
+custom_minimum_size = Vector2(540, 0)
+layout_mode = 2
+script = ExtResource("8_jqvig")
+scroll_direction = 1
+
+[node name="list" type="HBoxContainer" parent="modes/series/x"]
+custom_minimum_size = Vector2(340, 61)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="1" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "1x"
+
+[node name="3" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "3x"
+
+[node name="6" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "6x"
+
+[node name="9" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "9x"
+
+[node name="12" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "12x"
+
+[node name="15" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "15x"
+
+[node name="18" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "18x"
+
+[node name="21" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "21x"
+
+[node name="24" type="Button" parent="modes/series/x/list"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "24x"
+
+[node name="period_total" type="Control" parent="modes/series"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+
+[node name="details" type="VBoxContainer" parent="modes/series/period_total"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="title" type="Label" parent="modes/series/period_total/details"]
+self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Итого:"
+horizontal_alignment = 2
+
+[node name="months" type="HBoxContainer" parent="modes/series/period_total/details"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 2
+
+[node name="count" type="Label" parent="modes/series/period_total/details/months"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0"
+horizontal_alignment = 2
+
+[node name="month" type="Label" parent="modes/series/period_total/details/months"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "месяцев"

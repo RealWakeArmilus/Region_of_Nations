@@ -1,0 +1,111 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkhwjsplda53w"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ydoaf"]
+load_path = "res://.godot/imported/button.png-6ade8932adc9e29223a5598379589e01.ctex"
+
+[node name="filter_input" type="TextureRect"]
+self_modulate = Color(0.792157, 0.752941, 0.654902, 1)
+custom_minimum_size = Vector2(263, 37)
+texture = SubResource("CompressedTexture2D_ydoaf")
+expand_mode = 1
+
+[node name="label" type="Label" parent="."]
+self_modulate = Color(0.505882, 0.419608, 0.376471, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Все"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="list" type="VBoxContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(263, 0)
+layout_mode = 0
+offset_top = -165.0
+offset_right = 263.0
+offset_bottom = -5.0
+alignment = 2
+
+[node name="all" type="TextureButton" parent="list"]
+self_modulate = Color(0.696459, 0.651675, 0.539809, 1)
+custom_minimum_size = Vector2(0, 37)
+layout_mode = 2
+texture_normal = SubResource("CompressedTexture2D_ydoaf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="list/all"]
+self_modulate = Color(0.505882, 0.419608, 0.376471, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Все"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="product" type="TextureButton" parent="list"]
+self_modulate = Color(0.698039, 0.65098, 0.541176, 1)
+custom_minimum_size = Vector2(0, 37)
+layout_mode = 2
+texture_normal = SubResource("CompressedTexture2D_ydoaf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="list/product"]
+self_modulate = Color(0.505882, 0.419608, 0.376471, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Продукт"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tools" type="TextureButton" parent="list"]
+self_modulate = Color(0.698039, 0.65098, 0.541176, 1)
+custom_minimum_size = Vector2(0, 37)
+layout_mode = 2
+texture_normal = SubResource("CompressedTexture2D_ydoaf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="list/tools"]
+self_modulate = Color(0.505882, 0.419608, 0.376471, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Инструменты"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="raw" type="TextureButton" parent="list"]
+self_modulate = Color(0.698039, 0.65098, 0.541176, 1)
+custom_minimum_size = Vector2(0, 37)
+layout_mode = 2
+texture_normal = SubResource("CompressedTexture2D_ydoaf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="list/raw"]
+self_modulate = Color(0.505882, 0.419608, 0.376471, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Сырьё"
+horizontal_alignment = 1
+vertical_alignment = 1

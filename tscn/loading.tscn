@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1eiln5ox1ejl"]
+
+[ext_resource type="Script" uid="uid://dl75pgc2kpl8" path="res://gd/loading.gd" id="1_xnjla"]
+[ext_resource type="Texture2D" uid="uid://c64abky0kkns6" path="res://image/background/3.png" id="2_yrxys"]
+
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_xnjla")
+
+[node name="background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_yrxys")
+expand_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Loading" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+
+[node name="loading_tip" type="Label" parent="MarginContainer/Loading"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Совет: "
+
+[node name="loading_text" type="Label" parent="MarginContainer/Loading"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/Loading"]
+custom_minimum_size = Vector2(800, 10)
+layout_mode = 2
+size_flags_vertical = 8
+allow_greater = true
+show_percentage = false

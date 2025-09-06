@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmr1b1qp1wtu5"]
+
+[sub_resource type="Curve2D" id="Curve2D_r7qdg"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -518, -239, 0, 0, 0, 0, -383, -345, 0, 0, 0, 0, -192, -585)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_fd4qy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -90, 464, 0, 0, 0, 0, 2, 459, 0, 0, 0, 0, 113, 320, 0, 0, 0, 0, 17, 239, 0, 0, 0, 0, 7, 124, 0, 0, 0, 0, -279, 8, 0, 0, 0, 0, -383, -344)
+}
+point_count = 7
+
+[sub_resource type="Curve2D" id="Curve2D_q5imy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -382, -345, 0, 0, 0, 0, -52, -239, 0, 0, 0, 0, 91, -123, 0, 0, 0, 0, 295, -480, 0, 0, 0, 0, 404, -535, 0, 0, 0, 0, 623, -465, 0, 0, 0, 0, 587, -396, 0, 0, 0, 0, 195, -302)
+}
+point_count = 8
+
+[sub_resource type="Curve2D" id="Curve2D_e1ltc"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 344, 485, 0, 0, 0, 0, 329, 320, 0, 0, 0, 0, 114, 320)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_lowlo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 329, 320, 0, 0, 0, 0, 465, 245, 0, 0, 0, 0, 507, 115, 0, 0, 0, 0, 362, -2, 0, 0, 0, 0, 228, -63)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_bhc64"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 7, 124, 0, 0, 0, 0, -4, 9, 0, 0, 0, 0, 226, -63, 0, 0, 0, 0, 91, -124)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_ouipm"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 363, -3, 0, 0, 0, 0, 541, -132, 0, 0, 0, 0, 522, -276)
+}
+point_count = 3
+
+[node name="paths" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_r7qdg")
+
+[node name="Path2D2" type="Path2D" parent="."]
+curve = SubResource("Curve2D_fd4qy")
+
+[node name="Path2D3" type="Path2D" parent="."]
+curve = SubResource("Curve2D_q5imy")
+
+[node name="Path2D4" type="Path2D" parent="."]
+curve = SubResource("Curve2D_e1ltc")
+
+[node name="Path2D5" type="Path2D" parent="."]
+curve = SubResource("Curve2D_lowlo")
+
+[node name="Path2D6" type="Path2D" parent="."]
+curve = SubResource("Curve2D_bhc64")
+
+[node name="Path2D7" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ouipm")
