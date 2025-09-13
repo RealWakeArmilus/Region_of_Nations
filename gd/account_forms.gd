@@ -39,7 +39,6 @@ func _ready():
 	
 	if client["status"] == 0:
 		account_forms.hide()
-		return
 	
 	db.close_database()
 
