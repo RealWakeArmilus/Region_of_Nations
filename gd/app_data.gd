@@ -52,33 +52,27 @@ var campaign = ['campaign', tscn + 'campaign.tscn']
 var loading = ['Loading', tscn + "loading.tscn"]
 var map = ['map', tscn + 'map.tscn']
 
+# TODO ПРОВЕРКА ВАЖНЫХ ПАПОК
+#func list_directories(path):
+	#var dir = DirAccess.open(path)
+	#if dir:
+		#dir.list_dir_begin()
+		#var file_name = dir.get_next()
+		#while file_name != "":
+			#if dir.current_is_dir():
+				#print("Папка: ", file_name)
+			#file_name = dir.get_next()
+		#dir.list_dir_end()
+	#else:
+		#print("Ошибка доступа к папке: ", path)
+#
+## Использование:
 #func _ready():
-	#print('project_path: ', project_path)
+	#print("Содержимое папки пользователя:")
+	#list_directories(OS.get_user_data_dir())
 	#
-	#var data_region = project_path + "/maps/1/data_match.txt"
-	#print('data_region: ', data_region)
-
-
-func list_directories(path):
-	var dir = DirAccess.open(path)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				print("Папка: ", file_name)
-			file_name = dir.get_next()
-		dir.list_dir_end()
-	else:
-		print("Ошибка доступа к папке: ", path)
-
-# Использование:
-func _ready():
-	print("Содержимое папки пользователя:")
-	list_directories(OS.get_user_data_dir())
-	
-	print("Содержимое res://:")
-	list_directories("res://")
+	#print("Содержимое res://:")
+	#list_directories("res://")
 
 #var support_project = ['SupportProject', tscn + 'support_project.tscn']
 #var main_settings = ['MainSettings', tscn + "main_settings.tscn"]

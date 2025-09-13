@@ -1,5 +1,10 @@
 extends Node
 
+# ---- Signals -----
+signal login_completed(response_data: Dictionary)
+signal register_completed(response_data: Dictionary)
+
+
 @onready var http := HTTPRequest.new()
 var max_retries: int = 3  # Максимум 3 попытки при ошибке 500
 var current_retry: int = 0
@@ -10,17 +15,18 @@ func _ready():
 	http.request_completed.connect(_on_request_completed)
 
 ## Запрос Регистрация, на сайт
-func register_user(username: String, password: String) -> void:
-	request_template('register', username, password)
+func register_user(username: String, password: String) -> Dictionary:
+	return request_template('register', username, password)
 
 ## Запрос Логин, на сайт
-func login_user(username: String, password: String) -> void:
-	request_template('login', username, password)
+func login_user(username: String, password: String) -> Dictionary:
+	return request_template('login', username, password)
 
 ## Ответ сервера
 func _on_request_completed(_result, response_code, _headers, body):
 	var response_text = body.get_string_from_utf8()
 	var result_request: String
+	var request_type = last_request_data.get("type", "")
 	
 	if response_code == 500 and current_retry < max_retries:
 		current_retry += 1
@@ -48,6 +54,20 @@ func _on_request_completed(_result, response_code, _headers, body):
 				result_request = "[Код]: {0};\n[Ошибка]: Неизвестная ошибка;\n[Ответ]: {1}".format([response_code, response_text])
 	
 	print('\n-----------\n{0}-----------'.format([result_request]))
+	
+	var response_data = {
+		"response_code": response_code,
+		"response_text": body.get_string_from_utf8(),
+		"success": response_code == 200,
+		"request_type": request_type
+	}
+	
+	# Отправляем соответствующий сигнал в зависимости от типа запроса
+	match request_type:
+		"login":
+			login_completed.emit(response_data)
+		"register":
+			register_completed.emit(response_data)
 
 
 #
@@ -55,7 +75,7 @@ func _on_request_completed(_result, response_code, _headers, body):
 #
 
 ## Шаблон запроса
-func request_template(name_request: String, username: String, password: String):
+func request_template(name_request: String, username: String, password: String) -> Dictionary:
 	var url = "https://wakeEmil.pythonanywhere.com/{0}".format([name_request])
 	var headers = ["Content-Type: application/json"]
 	var body = {"username": username, "password": password}
@@ -64,6 +84,8 @@ func request_template(name_request: String, username: String, password: String):
 	var err = http.request(url, headers, HTTPClient.METHOD_POST, json_data)
 	if err != OK:
 		print("Ошибка при отправке запроса:", err)
+		return {'status': 0}
+	return {'status': 1}
 
 
 #

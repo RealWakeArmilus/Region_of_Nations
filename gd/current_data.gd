@@ -21,8 +21,6 @@ var match_info: Dictionary = {
 }
 
 var player: Dictionary = {
-	"unique_id": 'P10000',
-	"username": "user1111",
 	"nation_name": null
 }
 

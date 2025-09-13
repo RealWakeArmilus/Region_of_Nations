@@ -7,10 +7,39 @@ const TABLE_DEFINITIONS = {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
 		"name": {"data_type": "text", "not_null": true},
 		"map_img_path": {"data_type": "text"},
-		"regions_txt_path": {"data_type": "text"},
 		"regions_img_path": {"data_type": "text"},
 		"cities_img_path": {"data_type": "text"},
 		"path_tscn_path": {"data_type": "text"}
+	},
+	
+	"nations_type": {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		"map_id": {"data_type": "int", "not_null": true, "foreign_key": "maps.id"},
+		"name": {"data_type": "text", "not_null": true}
+	},
+	
+	"countries_type": {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		"nation_type_id": {"data_type": "int", "not_null": true, "foreign_key": "nations_type.id"},
+		"name": {"data_type": "text", "not_null": true},
+		"ruler": {"data_type": "text", "not_null": true}
+	},
+	
+	"provinces_type": {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		"country_type_id": {"data_type": "int", "not_null": true, "foreign_key": "countries_type.id"},
+		"name": {"data_type": "text", "not_null": true},
+		"government": {"data_type": "text", "not_null": true},
+		"capital": {"data_type": "bool", "not_null": true}
+	},
+	
+	"regions_type": {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		"province_type_id": {"data_type": "int", "not_null": true, "foreign_key": "provinces_type.id"},
+		"name": {"data_type": "text", "not_null": true},
+		"color_recognition": {"data_type": "text", "not_null": true}, # RGB COLOR
+		"color_view": {"data_type": "text", "not_null": true}, # RGB COLOR
+		#"flag": {"data_type": "text", "not_null": true, }, # "{\"flag_slot_1\": \"#FB0004\", \"flag_slot_2\": \"#FFFFFF\"}"
 	},
 	
 	"match_info": {
@@ -28,38 +57,39 @@ const TABLE_DEFINITIONS = {
 	"nations": {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
 		"name": {"data_type": "text", "not_null": true},
-		"match_id": {"data_type": "int", "not_null": true, "foreign_key": "match_info.id"},
-		"rating_rate": {"data_type": "real", "not_null": true, "default": 0.0},
-		"population_ratio": {"data_type": "real", "not_null": true, "default": 0.0},
-		"capital_ratio": {"data_type": "real", "not_null": true, "default": 0.0},
-		"employment_rate": {"data_type": "real", "not_null": true, "default": 0.0},
-		"professional_rate": {"data_type": "real", "not_null": true, "default": 0.0}
+		"match_id": {"data_type": "int", "not_null": true, "foreign_key": "match_info.id"}
+	},
+	
+	"bots": {
+		'id': {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		'username': {"data_type": "text", "not_null": true},
+		"nation_id": {"data_type": "int", "foreign_key": "nations.id"},
 	},
 	
 	"players": {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
-		"is_bot": {"data_type": "bool", "not_null": true, "default": true},
+		'username': {"data_type": "text", "not_null": true},
+		"is_my_client": {"data_type": "bool", "not_null": true},
 		"unique_id": {"data_type": "text", "not_null": true},
-		"username": {"data_type": "text", "not_null": true},
 		"nation_id": {"data_type": "int", "foreign_key": "nations.id"},
-		"is_expansion_of_power": {"data_type": "bool", "not_null": true, "default": false},
+		"intellect": {"data_type": "int", "not_null": true, "default": 0},
 		"budget": {"data_type": "real", "not_null": true, "default": 50_000.0}
 	},
 	
-	"nations_effects_type": {
-		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
-		"name": {"data_type": "text", "not_null": true},
-		"required_points": {"data_type": "int", "not_null": true},
-		"learn": {"data_type": "bool", "not_null": true, "default": true}
-	},
-	
-	"nations_effects": {
-		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
-		"nation_effects_type_id": {"data_type": "int", "not_null": true, "foreign_key": "nations_effects_type.id"},
-		"nation_id": {"data_type": "int", "not_null": true, "foreign_key": "nations.id"},
-		"received_points": {"data_type": "int", "not_null": true, "default": 0},
-		"open": {"data_type": "bool", "not_null": true, "default": false}
-	},
+	#"nations_effects_type": {
+		#"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		#"name": {"data_type": "text", "not_null": true},
+		#"required_points": {"data_type": "int", "not_null": true},
+		#"learn": {"data_type": "bool", "not_null": true, "default": true}
+	#},
+	#
+	#"nations_effects": {
+		#"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		#"nation_effects_type_id": {"data_type": "int", "not_null": true, "foreign_key": "nations_effects_type.id"},
+		#"nation_id": {"data_type": "int", "not_null": true, "foreign_key": "nations.id"},
+		#"received_points": {"data_type": "int", "not_null": true, "default": 0},
+		#"open": {"data_type": "bool", "not_null": true, "default": false}
+	#},
 	
 	"industries": {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
@@ -89,13 +119,15 @@ const TABLE_DEFINITIONS = {
 	"countries": {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
 		"name": {"data_type": "text", "not_null": true},
-		"player_id": {"data_type": "int", "foreign_key": "players.id"}
+		"player_id": {"data_type": "int", "foreign_key": "players.id"},
+		"bot_id": {"data_type": "int", "foreign_key": "bots.id"}
 	},
 	
 	"provinces": {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
 		"name": {"data_type": "text", "not_null": true},
 		"player_id": {"data_type": "int", "foreign_key": "players.id"},
+		"bot_id": {"data_type": "int", "foreign_key": "bots.id"},
 		"country_id": {"data_type": "int", "not_null": true, "foreign_key": "countries.id"},
 		"salary_fix": {"data_type": "real", "not_null": true, "default": 100.0}
 	},
@@ -105,7 +137,7 @@ const TABLE_DEFINITIONS = {
 		"name": {"data_type": "text", "not_null": true},
 		"color_recognition": {"data_type": "text", "not_null": true},  # Формат #RRGGBB
 		"color_view": {"data_type": "text", "not_null": true},  # Формат #RRGGBB
-		"flag": {"data_type": "text"},
+		#"flag": {"data_type": "text"},
 		"budget": {"data_type": "real", "not_null": true, "default": 1_000_000.0},
 		"province_id": {"data_type": "int", "not_null": true, "foreign_key": "provinces.id"}
 	},
@@ -147,6 +179,7 @@ const TABLE_DEFINITIONS = {
 		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
 		"name": {"data_type": "text", "not_null": true},
 		"player_id": {"data_type": "int", "foreign_key": "players.id"},
+		"bot_id": {"data_type": "int", "foreign_key": "bots.id"},
 		"speciality_id": {"data_type": "int", "foreign_key": "specializations.id"}
 	},
 	
@@ -187,16 +220,70 @@ const TABLE_DEFINITIONS = {
 ## Статичные данные для инициализации таблиц
 const STATIC_DATA = {
 	"maps": [
-		{"id": 1, "name": "Birth of the Roman Empire", "map_img_path": "res://maps/1/map.png", "regions_txt_path": "res://maps/1/regions.txt", "regions_img_path": "res://maps/1/regions.png", "cities_img_path": "res://maps/1/cities.png", "path_tscn_path": "res://maps/1/paths.tscn"}
+		{"id": 1, "name": "Обучение", "map_img_path": "res://maps/1/map.png", "regions_img_path": "res://maps/1/regions.png", "cities_img_path": "res://maps/1/cities.png", "path_tscn_path": "res://maps/1/paths.tscn"}
+	],
+	"nations_type": [
+		{"id": 1, "map_id": 1, "name": "Римляне"},
+		{"id": 2, "map_id": 1, "name": "Этрусски"},
+		{"id": 3, "map_id": 1, "name": "Галлы"},
+		{"id": 4, "map_id": 1, "name": "Греки"}
+	],
+	"countries_type": [
+		{"id": 1, "nation_type_id": 1, "name": "Римская империя", "ruler": "Луций Корнелий Сулла"},
+		{"id": 2, "nation_type_id": 2, "name": "Царство Этрусков", "ruler": "Зилато Лукумон"},
+		{"id": 3, "nation_type_id": 3, "name": "Галлия", "ruler": "Бренн Стойкий"},
+		{"id": 4, "nation_type_id": 4, "name": "Греческие территории", "ruler": "Архонт Дамипп Кротонский"}
+	],
+	"provinces_type": [
+		{"id": 1, "country_type_id": 1, "name": "Римская империя", "government": "Луций Корнелий Сулла", "capital": 1},
+		{"id": 2, "country_type_id": 2, "name": "Лидский берег", "government": "Зилато Лукумон", "capital": 1},
+		{"id": 3, "country_type_id": 3, "name": "Галльские равнины", "government": "Бренн Стойкий", "capital": 1},
+		{"id": 4, "country_type_id": 4, "name": "Греческая колония", "government": "Архонт Дамипп Кротонский", "capital": 1}
+	],
+	"regions_type": [
+		{"id": 1, "province_type_id": 1, "name": "Misenum", "color_recognition": "#C20003", "color_view": "#FB0004"},
+		{"id": 2, "province_type_id": 1, "name": "Beneventum", "color_recognition": "#E20004", "color_view": "#FB0004"},
+		{"id": 3, "province_type_id": 1, "name": "Neapolis", "color_recognition": "#EA0307", "color_view": "#FB0004"},
+		{"id": 4, "province_type_id": 1, "name": "Rome", "color_recognition": "#FB0004", "color_view": "#FB0004"},
+		{"id": 5, "province_type_id": 1, "name": "Ausculim", "color_recognition": "#F30004", "color_view": "#FB0004"},
+		{"id": 6, "province_type_id": 1, "name": "Volsonii", "color_recognition": "#EA0004", "color_view": "#FB0004"},
+		{"id": 7, "province_type_id": 1, "name": "Arretioum", "color_recognition": "#FA0004", "color_view": "#FB0004"},
+		{"id": 8, "province_type_id": 1, "name": "Ancona", "color_recognition": "#FF0004", "color_view": "#FB0004"},
+		
+		{"id": 9, "province_type_id": 2, "name": "Ariminum", "color_recognition": "#C25100", "color_view": "#FB8E00"},
+		{"id": 10, "province_type_id": 2, "name": "Pisae", "color_recognition": "#E25E00", "color_view": "#FB8E00"},
+		{"id": 11, "province_type_id": 2, "name": "Ravenna", "color_recognition": "#EA7A03", "color_view": "#FB8E00"},
+		{"id": 12, "province_type_id": 2, "name": "Patavium", "color_recognition": "#FF8400", "color_view": "#FB8E00"},
+		{"id": 13, "province_type_id": 2, "name": "Bononia", "color_recognition": "#F38A00", "color_view": "#FB8E00"},
+		{"id": 14, "province_type_id": 2, "name": "Placentia", "color_recognition": "#FA8100", "color_view": "#FB8E00"},
+		{"id": 15, "province_type_id": 2, "name": "Cemenelum", "color_recognition": "#EA6D00", "color_view": "#FB8E00"},
+		{"id": 16, "province_type_id": 2, "name": "Genua", "color_recognition": "#FB8E00", "color_view": "#FB8E00"},
+		
+		{"id": 17, "province_type_id": 3, "name": "Pola", "color_recognition": "#683600", "color_view": "#683600"},
+		{"id": 18, "province_type_id": 3, "name": "Tegeste", "color_recognition": "#553102", "color_view": "#683600"},
+		{"id": 19, "province_type_id": 3, "name": "Aquileia", "color_recognition": "#763D00", "color_view": "#683600"},
+		{"id": 20, "province_type_id": 3, "name": "Verona", "color_recognition": "#622901", "color_view": "#683600"},
+		{"id": 21, "province_type_id": 3, "name": "Mediolanum", "color_recognition": "#7E4800", "color_view": "#683600"},
+		{"id": 22, "province_type_id": 3, "name": "Taurinorum", "color_recognition": "#572400", "color_view": "#683600"},
+		{"id": 23, "province_type_id": 3, "name": "Augusta", "color_recognition": "#5F2D00", "color_view": "#683600"},
+		
+		{"id": 24, "province_type_id": 4, "name": "Regiom", "color_recognition": "#0051FF", "color_view": "#0051FA"},
+		{"id": 25, "province_type_id": 4, "name": "Croton", "color_recognition": "#004AEA", "color_view": "#0051FA"},
+		{"id": 26, "province_type_id": 4, "name": "Thurii", "color_recognition": "#004DF3", "color_view": "#0051FA"},
+		{"id": 27, "province_type_id": 4, "name": "Tarantum", "color_recognition": "#034CEA", "color_view": "#0051FA"},
+		{"id": 28, "province_type_id": 4, "name": "Brundisium", "color_recognition": "#0047E2", "color_view": "#0051FA"},
+		{"id": 29, "province_type_id": 4, "name": "Isium-Tarent", "color_recognition": "#003DC2", "color_view": "#0051FA"},
+		{"id": 30, "province_type_id": 4, "name": "Paestum", "color_recognition": "#0050FB", "color_view": "#0051FA"},
+		{"id": 31, "province_type_id": 4, "name": "Laus", "color_recognition": "#0051FA", "color_view": "#0051FA"}
 	],
 	"match_info": [
-		{"id": 1, "name": "Birth of the Roman Empire", "map_id": 1, "is_campaign": 1, "start_time_world": "{'F': 1, 'M': 1, 'Y': 1}", "current_time_world": "{'F': 1, 'M': 1, 'Y': 1}", "finish_time_world": "{'F': 3, 'M': 12, 'Y': 100}", "time_speed": 20, "passing_time": 0}
+		{"id": 1, "name": "Обучение", "map_id": 1, "is_campaign": 1, "start_time_world": "{'M': 1, 'Y': 1533}", "current_time_world": "{'M': 1, 'Y': 1533}", "finish_time_world": "{'M': 12, 'Y': 1584}", "time_speed": 20, "passing_time": 0}
 	],
-	"nations_effects_type": [
-		{"id": 1, "name": "язык", "required_points": 0, "learn": 1}, 
-		{"id": 2, "name": "Рост мышц", "required_points": 1000, "learn": 1}, 
-		{"id": 3, "name": "Интеллект", "required_points": 1000, "learn": 1} # Снижает цену, на 
-	],
+	#"nations_effects_type": [
+		#{"id": 1, "name": "язык", "required_points": 0, "learn": 1}, 
+		#{"id": 2, "name": "Рост мышц", "required_points": 1000, "learn": 1}, 
+		#{"id": 3, "name": "Интеллект", "required_points": 1000, "learn": 1} # Снижает цену, на 
+	#],
 	"industries": [
 		{"id": 1, "name": "default"},
 		{"id": 2, "name": "добыча"},

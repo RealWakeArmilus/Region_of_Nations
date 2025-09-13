@@ -12,7 +12,6 @@ extends Control
 @onready var nations: VBoxContainer = $campaign/nations
 
 var db: SQLite
-var api: Website_API = Website_API
 
 func _ready():
 	get_game_version()

@@ -14,6 +14,7 @@ signal generation_map_initialized(success: bool)
 @onready var path_scene
 
 var db: SQLiteHelper
+var map_id: int
 
 func initialize_generation():
 	var start = Time.get_ticks_usec()
@@ -36,7 +37,9 @@ func initialize_generation():
 func set_sprites():
 	var start = Time.get_ticks_usec()
 	var match_info = (db.find_records_by_params("match_info", {"is_campaign": true}, ["map_id"], 1))[0]
-	var map_info = (db.find_records_by_params("maps", {"id": match_info['map_id']}, ["map_img_path", "regions_img_path", "cities_img_path", "path_tscn_path"], 1))[0]
+	var map_info = (db.find_records_by_params("maps", {"id": match_info['map_id']}, ['id', "map_img_path", "regions_img_path", "cities_img_path", "path_tscn_path"], 1))[0]
+	
+	map_id = map_info['id']
 	
 	map = $".."
 	generation_map = $"."
@@ -58,26 +61,37 @@ func load_paths():
 
 func load_regions():
 	var start = Time.get_ticks_usec()
-	var data_regions = db.get_all_records("regions")
+	
+	var regions_type = []
+	
+	var nations_type = db.find_records('nations_type', 'map_id', map_id, [])
+	for nation_type in nations_type:
+		var countries_type = db.find_records('countries_type', 'nation_type_id', nation_type['id'], [])
+		for country_type in countries_type:
+			var provinces_type = db.find_records('provinces_type', 'country_type_id', country_type['id'], [])
+			for province_type in provinces_type:
+				var province_regions = db.find_records('regions_type', 'province_type_id', province_type['id'], [])
+				regions_type.append_array(province_regions)
+	
 	var image = regions_image.get_texture().get_image()
 	var pixel_color_dict = get_pixel_color_dict(image)
 	var city_pixel_data = get_city_pixel_data()
 	
-	for data_region in data_regions:
-		generation_region(data_region, image, pixel_color_dict, city_pixel_data)
+	for region_type in regions_type:
+		generation_region(region_type, image, pixel_color_dict, city_pixel_data)
 	print("Время load_regions: %d мкс" % (Time.get_ticks_usec() - start))
 
-func generation_region(data_region: Dictionary, image: Image, pixel_color_dict: Dictionary, city_pixel_data: Dictionary):
+func generation_region(region_type: Dictionary, image: Image, pixel_color_dict: Dictionary, city_pixel_data: Dictionary):
 	var start = Time.get_ticks_usec()
-	if not pixel_color_dict.has(data_region['color_recognition'].to_lower()):
-		push_error("Цвет региона '%s' не найден на изображении!" % data_region['color_recognition'].to_lower())
+	if not pixel_color_dict.has(region_type['color_recognition'].to_lower()):
+		push_error("Цвет региона '%s' не найден на изображении!" % region_type['color_recognition'].to_lower())
 		return
 	
 	var tscn_region = load("res://tscn/region.tscn").instantiate()
-	tscn_region = set_data_region(tscn_region, data_region)
+	tscn_region = set_data_region(tscn_region, region_type)
 	regions.add_child(tscn_region)
 	
-	var polygons = get_polygons(image, data_region['color_recognition'].to_lower(), pixel_color_dict)
+	var polygons = get_polygons(image, region_type['color_recognition'].to_lower(), pixel_color_dict)
 	
 	if polygons.is_empty():
 		return
@@ -99,7 +113,7 @@ func generation_region(data_region: Dictionary, image: Image, pixel_color_dict: 
 		tscn_region.add_child(visual_container)
 		
 		# 2. Добавляем город в VisualContainer
-		add_city_to_region(tscn_region, visual_container, pixel_color_dict[data_region['color_recognition'].to_lower()], city_pixel_data, data_region['name'])
+		add_city_to_region(tscn_region, visual_container, pixel_color_dict[region_type['color_recognition'].to_lower()], city_pixel_data, region_type['name'])
 		
 		# 3. Добавляем CollisionPolygon2D
 		var region_collision = CollisionPolygon2D.new()
@@ -109,7 +123,7 @@ func generation_region(data_region: Dictionary, image: Image, pixel_color_dict: 
 		# 4. Добавляем Polygon2D в VisualContainer
 		var region_polygon = Polygon2D.new()
 		region_polygon.polygon = largest_polygon
-		region_polygon.color = Color(data_region['color_view'].to_lower(), 0.15)
+		region_polygon.color = Color(region_type['color_view'].to_lower(), 0.15)
 		visual_container.add_child(region_polygon)
 		
 		# 5. Настраиваем материал
@@ -144,7 +158,7 @@ func set_data_region(tscn_region: Area2D, data_region: Dictionary) -> Area2D:
 	tscn_region.data = {
 		"id" : data_region['id'],
 		"name": data_region['name'],
-		"flag" : JSON.parse_string(data_region['flag']),
+		#"flag" : JSON.parse_string(data_region['flag']),
 		'department': false
 	}
 	
@@ -242,21 +256,13 @@ func create_city_marker(tscn_region: Area2D, visual_container: Node2D, city_posi
 	visual_marker.z_index = 2
 	city_container.add_child(visual_marker)
 	
-	# 2. Добавляем иконку рядом с визуальным маркером
-	var icon = Sprite2D.new()
-	icon.name = "CityIcon"
-	icon.texture = load("res://image/icon/region/city.png")  # Укажите правильный путь
-	icon.scale = Vector2(0.1, 0.1)
-	icon.z_index = 1
-	city_container.add_child(icon)
-	
-	# 3. Добавляем коллизию
+	# 2. Добавляем коллизию
 	var collision_marker = CollisionPolygon2D.new()
 	collision_marker.name = "Collision"
 	collision_marker.polygon = diamond_polygon
 	city_container.add_child(collision_marker)
 	
-	# 4. Добавляем подпись
+	# 3. Добавляем подпись
 	var label = Label.new()
 	label.name = "CityLabel"
 	label.text = region_name
@@ -270,7 +276,7 @@ func create_city_marker(tscn_region: Area2D, visual_container: Node2D, city_posi
 	
 	city_container.add_child(label)
 	
-	# 5. Добавляем кнопку создания филиала
+	# 4. Добавляем кнопку создания филиала
 	var create_branch_button = TextureButton.new()
 	create_branch_button.name = "create_branch"
 	create_branch_button.texture_normal = load("res://image/icon/region/sections/create_branch.png")

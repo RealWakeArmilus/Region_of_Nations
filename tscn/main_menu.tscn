@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2mk3p2sawbxj"]
+[gd_scene load_steps=15 format=3 uid="uid://c2mk3p2sawbxj"]
 
 [ext_resource type="Script" uid="uid://b55hs2kq5ji6s" path="res://gd/main_menu.gd" id="1_ra1sj"]
 [ext_resource type="Texture2D" uid="uid://sxwteryeavq4" path="res://image/background/2.png" id="2_p6scp"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://cn3tomuacyx01" path="res://image/button/button.svg" id="4_gwonb"]
 [ext_resource type="Texture2D" uid="uid://1btgv4eoricq" path="res://image/icon/links/telegram.png" id="4_ra1sj"]
 [ext_resource type="AudioStream" uid="uid://ctx2jje8wk8w" path="res://audio/screensaver_1.mp3" id="6_p6scp"]
+[ext_resource type="Script" uid="uid://2j680xl4fpaf" path="res://gd/account_forms.gd" id="9_56gxj"]
+[ext_resource type="Texture2D" uid="uid://cko5htchbqtd7" path="res://image/background/1.svg" id="9_mtscv"]
+[ext_resource type="Texture2D" uid="uid://cvwqjqxxbpbvl" path="res://image/substrates/button/classic.png" id="10_8ph3v"]
 
 [sub_resource type="FontVariation" id="FontVariation_p6scp"]
 variation_embolden = 0.55
@@ -197,7 +200,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_font_sizes/font_size = 36
-text = "v0.1"
+text = "v..."
 
 [node name="game" type="MarginContainer" parent="."]
 visible = false
@@ -480,6 +483,301 @@ stream = ExtResource("6_p6scp")
 volume_db = -10.0
 autoplay = true
 
+[node name="account_forms" type="Panel" parent="."]
+self_modulate = Color(0.099986, 0.099986, 0.099986, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_56gxj")
+
+[node name="sign_in" type="TextureRect" parent="account_forms"]
+self_modulate = Color(0.46492, 0.41941, 0.318476, 1)
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -200.0
+offset_right = 225.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_mtscv")
+expand_mode = 1
+
+[node name="title" type="Panel" parent="account_forms/sign_in"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="account_forms/sign_in/title"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Авторизация"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="form" type="VBoxContainer" parent="account_forms/sign_in"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -70.5
+offset_bottom = 70.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="username" type="VBoxContainer" parent="account_forms/sign_in/form"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="title" type="Label" parent="account_forms/sign_in/form/username"]
+layout_mode = 2
+text = "Username"
+
+[node name="input" type="LineEdit" parent="account_forms/sign_in/form/username"]
+layout_mode = 2
+placeholder_text = "nickname is Twitch, Telegram"
+
+[node name="password" type="VBoxContainer" parent="account_forms/sign_in/form"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="title" type="Label" parent="account_forms/sign_in/form/password"]
+layout_mode = 2
+text = "Password"
+
+[node name="input" type="LineEdit" parent="account_forms/sign_in/form/password"]
+layout_mode = 2
+
+[node name="error" type="Label" parent="account_forms/sign_in"]
+visible = false
+self_modulate = Color(1, 0.0666667, 0.0980392, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -100.0
+offset_right = 22.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Error:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="button" type="TextureButton" parent="account_forms/sign_in"]
+self_modulate = Color(0.683822, 0.6288, 0.510011, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -65.0
+offset_right = 110.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("10_8ph3v")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="account_forms/sign_in/button"]
+self_modulate = Color(0.247059, 0.227451, 0.188235, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Войти"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sign_up_open" type="Button" parent="account_forms/sign_in"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = 22.0
+offset_right = 75.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Sign up"
+
+[node name="sign_up" type="TextureRect" parent="account_forms"]
+visible = false
+self_modulate = Color(0.46492, 0.41941, 0.318476, 1)
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -200.0
+offset_right = 225.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_mtscv")
+expand_mode = 1
+
+[node name="title" type="Panel" parent="account_forms/sign_up"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="account_forms/sign_up/title"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Регистрация"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="form" type="VBoxContainer" parent="account_forms/sign_up"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -70.5
+offset_bottom = 70.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="username" type="VBoxContainer" parent="account_forms/sign_up/form"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="title" type="Label" parent="account_forms/sign_up/form/username"]
+layout_mode = 2
+text = "Username"
+
+[node name="input" type="LineEdit" parent="account_forms/sign_up/form/username"]
+layout_mode = 2
+placeholder_text = "nickname is Twitch, Telegram"
+
+[node name="password" type="VBoxContainer" parent="account_forms/sign_up/form"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="title" type="Label" parent="account_forms/sign_up/form/password"]
+layout_mode = 2
+text = "Password"
+
+[node name="input" type="LineEdit" parent="account_forms/sign_up/form/password"]
+layout_mode = 2
+
+[node name="error" type="Label" parent="account_forms/sign_up"]
+visible = false
+self_modulate = Color(1, 0.0666667, 0.0980392, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -100.0
+offset_right = 22.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Error:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="button" type="TextureButton" parent="account_forms/sign_up"]
+self_modulate = Color(0.683822, 0.6288, 0.510011, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -65.0
+offset_right = 110.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("10_8ph3v")
+ignore_texture_size = true
+
+[node name="Label" type="Label" parent="account_forms/sign_up/button"]
+self_modulate = Color(0.247059, 0.227451, 0.188235, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Создать"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sign_in_open" type="Button" parent="account_forms/sign_up"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = 22.0
+offset_right = 75.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Sign in"
+
 [connection signal="pressed" from="info/menu/buttons/campaign" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="info/links/website" to="." method="_on_website_pressed"]
 [connection signal="pressed" from="info/links/telegram" to="." method="_on_telegram_pressed"]
@@ -488,3 +786,7 @@ autoplay = true
 [connection signal="pressed" from="campaign/Panel/title/back_game" to="." method="_on_back_game_pressed"]
 [connection signal="pressed" from="campaign/questions/buttons/load" to="." method="_on_load_campaign_pressed"]
 [connection signal="pressed" from="campaign/questions/buttons/new" to="." method="_on_new_campaign_pressed"]
+[connection signal="pressed" from="account_forms/sign_in/button" to="account_forms" method="_on_in_button_pressed"]
+[connection signal="pressed" from="account_forms/sign_in/sign_up_open" to="account_forms" method="_on_sign_up_open_pressed"]
+[connection signal="pressed" from="account_forms/sign_up/button" to="account_forms" method="_on_up_button_pressed"]
+[connection signal="pressed" from="account_forms/sign_up/sign_in_open" to="account_forms" method="_on_sign_in_open_pressed"]
