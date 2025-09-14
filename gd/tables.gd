@@ -72,7 +72,7 @@ const TABLE_DEFINITIONS = {
 		"is_my_client": {"data_type": "bool", "not_null": true},
 		"unique_id": {"data_type": "text", "not_null": true},
 		"nation_id": {"data_type": "int", "foreign_key": "nations.id"},
-		"intellect": {"data_type": "int", "not_null": true, "default": 0},
+		"brain": {"data_type": "int", "not_null": true, "default": 50},
 		"budget": {"data_type": "real", "not_null": true, "default": 50_000.0}
 	},
 	
@@ -213,6 +213,22 @@ const TABLE_DEFINITIONS = {
 		"start_production": {"data_type": "text"}, # JSON TIME
 		"ent_production": {"data_type": "text"}, # JSON TIME
 		"status": {"data_type": "bool", "not_null": true, "default": false} # True - завершено, False - в процессе
+	},
+	
+	"department_order": {
+		"id": {"data_type": "int", "primary_key": true, "auto_increment": true, "not_null": true},
+		"region_id": {"data_type": "int", "not_null": true, "foreign_key": "regions.id"},
+		"good_id": {"data_type": "int", "not_null": true, "foreign_key": "goods.id"},
+		"type_order": {"data_type": "bool", "not_null": true, "default": 0}, # 0 - продажа, 1 - покупка
+		"department_warehouse_id": {"data_type": "int", "not_null": true, "foreign_key": "department_warehouse.id"}, # если покупатель-продавец компания
+		"population_group_id": {"data_type": "int", "not_null": true, "foreign_key": "population_groups.id"}, # если покупатель группа людей
+		"start_count": {"data_type": "int", "not_null": true, "default": 0}, # Товара предоставлено на орден изначально
+		"current_count": {"data_type": "int", "not_null": true, "default": 0}, # Товара осталось
+		"price" : {"data_type": "real", "not_null": true, "default": 0.0},
+		"start_time": {"data_type": "text"}, # JSON TIME - создана
+		"end_time": {"data_type": "text"}, # JSON TIME - завершена
+		"status": {"data_type": "bool", "not_null": true, "default": 0}, # 0 - активна, 1 - закрыта
+		"closing_status": {"data_type": "bool", "not_null": true, "default": 0} # -1 - заявка активнаы, 0 - закрыта по завершению сделки, 1 - отменена
 	}
 }
 

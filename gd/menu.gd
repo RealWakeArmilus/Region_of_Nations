@@ -2,15 +2,16 @@ extends MarginContainer
 
 @onready var player_node = $"../.."
 
-@onready var player_avatar: TextureRect = $head/account/player/HBC/avatar/substrate/icon
-@onready var player_username: Label = $head/account/player/HBC/info/username/HBC/text
-@onready var player_nation: Label = $head/account/player/HBC/info/nation/HBC/text
+@onready var player_avatar: TextureRect = $head/account/player/info/avatar/substrate/icon
+@onready var player_username: Label = $head/account/player/info/username/text
+@onready var player_nation: Label = $head/account/player/info/nation/text
+@onready var player_brain_count: Label = $head/account/player/brain/count
 
-@onready var company_info: Panel = $head/VBoxContainer/company_info
-@onready var company_avatar: TextureRect = $head/account/avatars/slot_1/avatar/icon
-@onready var company_name: Label = $head/VBoxContainer/company_info/details/name/text
-@onready var company_speciality: Label = $head/VBoxContainer/company_info/details/speciality/text
-@onready var create_activity_button: TextureButton = $head/account/avatars/slot_1/avatar/create_activity
+@onready var company_info: Panel = $head/info/company
+@onready var company_avatar: TextureRect = $"head/info/avatars/1/icon"
+@onready var company_name: Label = $head/info/company/details/name/text
+@onready var company_speciality: Label = $head/info/company/details/speciality/text
+@onready var create_activity_button: TextureButton = $"head/info/avatars/1/create_activity"
 
 @onready var create_panel = $create_panel
 @onready var industy_select_name = $create_panel/body/industry/select_name/text

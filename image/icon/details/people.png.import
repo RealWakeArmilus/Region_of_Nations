@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diut1spp758im"
-path="res://.godot/imported/flag_slot_3.svg-6b8b61167220a188df917e89a10edf30.ctex"
+uid="uid://bfsescp1qgsmx"
+path="res://.godot/imported/people.png-040cb1afc57dc7e1024b87af7181c703.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://image/flag_slot_3.svg"
-dest_files=["res://.godot/imported/flag_slot_3.svg-6b8b61167220a188df917e89a10edf30.ctex"]
+source_file="res://image/icon/details/people.png"
+dest_files=["res://.godot/imported/people.png-040cb1afc57dc7e1024b87af7181c703.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

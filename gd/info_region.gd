@@ -18,6 +18,7 @@ extends Control
 @onready var production_tasks = $body/container/substrates/production_tasks
 @onready var staff_settings = $body/container/substrates/staff_settings
 @onready var warehouse = $body/container/substrates/warehouse
+@onready var stock: Control = $body/container/substrates/stock
 
 @onready var basement = $basement
 @onready var section_company = $basement/section_company
@@ -48,3 +49,4 @@ func _on_close_all_sections_pressed():
 	staff_info.hide()
 	staff_settings_button.show()
 	warehouse.hide()
+	stock.hide()

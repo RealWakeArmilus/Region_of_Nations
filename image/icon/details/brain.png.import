@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biaqvskm3llh4"
-path="res://.godot/imported/flag_slot_2.svg-2025fab68ea07418d317eb3704520514.ctex"
+uid="uid://dhdh2xn4vwnsg"
+path="res://.godot/imported/brain.png-5e78c2731150b922c6e7a64060c12ea1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://image/flag_slot_2.svg"
-dest_files=["res://.godot/imported/flag_slot_2.svg-2025fab68ea07418d317eb3704520514.ctex"]
+source_file="res://image/icon/details/brain.png"
+dest_files=["res://.godot/imported/brain.png-5e78c2731150b922c6e7a64060c12ea1.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

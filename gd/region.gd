@@ -1,6 +1,7 @@
 extends Area2D
 
 var db: SQLiteHelper
+var format: Format
 var player_node
 var visual_container
 var path_region_node
@@ -16,10 +17,14 @@ var data : Dictionary = {
 
 
 func _ready():
+	format = Format.new()
+	
 	# Установим нод игрока в каждый регион
 	player_node = get_node("/root/map/Player")
+	
 	path_region_node = "/root/map/regions/{0}".format([data.get('name')])
 	path_create_branch_button = "/root/map/regions/{0}/VisualContainer//City_{0}/create_branch".format([data.get('name')])
+	
 	
 	# Убедимся, что визуальный контейнер существует
 	visual_container = get_node_or_null("VisualContainer")
@@ -47,10 +52,10 @@ func _on_input_event(_viewport, event, _shape_idx):
 		#var flag = get_node('/root/map/Player/UI/INFORegion/background/head/flag') as Control
 		#set_flag(flag)
 		player_node.info_region.name_region.text = data['name']
-		player_node.info_region.total_population.text = 'Население: ' + region_info['total_people']
-		player_node.info_region.total_workers_count.text = company_department_info['total_workers']
-		player_node.info_region.free_workers_count.text = company_department_info['free_workers']
-		player_node.info_region.busy_workers_count.text = company_department_info['busy_workers']
+		player_node.info_region.total_population.text = format.compact_count(region_info['total_people'])
+		player_node.info_region.total_workers_count.text = format.compact_count(company_department_info['total_workers'])
+		player_node.info_region.free_workers_count.text = format.compact_count(company_department_info['free_workers'])
+		player_node.info_region.busy_workers_count.text = format.compact_count(company_department_info['busy_workers'])
 		#var relationship = get_node("/root/map/Player/UI/INFORegion/background/relationship")
 		#if base_info_region['name_nation'] == str(get_node("/root/map/Player/UI/Menu/Panel/player_info/nation").text).substr(4):
 			#relationship.self_modulate = Color(0.207, 1.0, 0.176)
@@ -177,7 +182,7 @@ func get_region_info(database: SQLiteHelper):
 	for population_group in population_groups:
 		total_population += population_group['total_people']
 	
-	return {'region_info': region_info, 'total_people': str(total_population)}
+	return {'region_info': region_info, 'total_people': total_population}
 
 ## Возвращает кнопку для установки филлиала компании
 func get_path_region_node_and_region_id() -> Dictionary:
@@ -194,13 +199,13 @@ func get_company_department_workers(database: SQLiteHelper):
 	var free_workers: int = 0
 	
 	if data['department_id'] == -1:
-		return {'total_workers': str(total_workers), 'free_workers': str(0), 'busy_workers': str(0)}
+		return {'total_workers': total_workers, 'free_workers': 0, 'busy_workers': 0}
 	
 	company_department_record = (database.find_records_by_params("company_departments", {"id": data['department_id']}, [], 1))[0]
 	var tasks = db.find_records('department_tasks', 'company_department_id', data['department_id'])
 	
 	if tasks.is_empty():
-		return {'total_workers': str(total_workers), 'free_workers': str(total_workers), 'busy_workers': str(0)}
+		return {'total_workers': total_workers, 'free_workers': total_workers, 'busy_workers': 0}
 		
 	for task in tasks:
 		var busy_workers_data = JSON.parse_string(task['busy_workers_data'])
@@ -209,7 +214,7 @@ func get_company_department_workers(database: SQLiteHelper):
 	total_workers = company_department_record['total_workers']
 	free_workers = total_workers - busy_workers
 	
-	return {'total_workers': str(total_workers), 'free_workers': str(free_workers), 'busy_workers': str(busy_workers)}
+	return {'total_workers': total_workers, 'free_workers': free_workers, 'busy_workers': busy_workers}
 
 #
 # Проверки

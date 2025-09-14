@@ -24,8 +24,6 @@ script = ExtResource("4_bhkyt")
 
 [node name="Player" parent="." instance=ExtResource("5_ghqhn")]
 
-[node name="map_image" type="Sprite2D" parent="."]
-
 [node name="sprites" type="Node2D" parent="."]
 
 [node name="regions_image" type="Sprite2D" parent="sprites"]

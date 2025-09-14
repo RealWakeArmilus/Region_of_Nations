@@ -6,15 +6,17 @@ signal generation_map_initialized(success: bool)
 @export var cities_image: Sprite2D
 @export var paths_image: Sprite2D
 @export var path_tscn_path: String
-@onready var map_image: Sprite2D
 
-@onready var map: Node2D
+@onready var map_node: Node2D
 @onready var generation_map: Node
-@onready var regions: Node2D
+@onready var regions_node: Node2D
 @onready var path_scene
 
+# ----- переменные ------
 var db: SQLiteHelper
+var match_info: Dictionary
 var map_id: int
+var transparency_regions: float = 0.8
 
 func initialize_generation():
 	var start = Time.get_ticks_usec()
@@ -24,8 +26,7 @@ func initialize_generation():
 	load_regions()
 	load_paths()
 	
-	map_image.scale = Vector2(3, 3)
-	regions.scale = Vector2(3, 3)
+	regions_node.scale = Vector2(3, 3)
 	path_scene.scale = Vector2(1, 1)
 	
 	db.close_database()
@@ -36,136 +37,81 @@ func initialize_generation():
 
 func set_sprites():
 	var start = Time.get_ticks_usec()
-	var match_info = (db.find_records_by_params("match_info", {"is_campaign": true}, ["map_id"], 1))[0]
-	var map_info = (db.find_records_by_params("maps", {"id": match_info['map_id']}, ['id', "map_img_path", "regions_img_path", "cities_img_path", "path_tscn_path"], 1))[0]
+	match_info = (db.find_records_by_params("match_info", {"is_campaign": true}, [], 1))[0]
+	var map_info = (db.find_records_by_params("maps", {"id": match_info['map_id']}, ['id', "regions_img_path", "cities_img_path", "path_tscn_path"], 1))[0]
 	
 	map_id = map_info['id']
 	
-	map = $".."
+	map_node = $".."
 	generation_map = $"."
-	regions = $"../regions"
-	map_image = $"../map_image"
+	regions_node = $"../regions"
 	
 	regions_image.texture = load(map_info['regions_img_path'])
 	cities_image.texture = load(map_info['cities_img_path'])
-	map_image.texture = load(map_info['map_img_path'])
 	path_tscn_path = map_info['path_tscn_path']
 	print("Время set_sprites: %d мкс" % (Time.get_ticks_usec() - start))
 
 func load_paths():
 	var start = Time.get_ticks_usec()
 	path_scene = load(path_tscn_path).instantiate()
-	map.add_child.call_deferred(path_scene)
+	map_node.add_child.call_deferred(path_scene)
 	path_scene.set_name.call_deferred('paths')
 	print("Время load_paths: %d мкс" % (Time.get_ticks_usec() - start))
 
 func load_regions():
 	var start = Time.get_ticks_usec()
 	
-	var regions_type = []
-	
-	var nations_type = db.find_records('nations_type', 'map_id', map_id, [])
-	for nation_type in nations_type:
-		var countries_type = db.find_records('countries_type', 'nation_type_id', nation_type['id'], [])
-		for country_type in countries_type:
-			var provinces_type = db.find_records('provinces_type', 'country_type_id', country_type['id'], [])
-			for province_type in provinces_type:
-				var province_regions = db.find_records('regions_type', 'province_type_id', province_type['id'], [])
-				regions_type.append_array(province_regions)
+	var match_regions = get_regions_for_match(match_info['id'])
 	
 	var image = regions_image.get_texture().get_image()
 	var pixel_color_dict = get_pixel_color_dict(image)
 	var city_pixel_data = get_city_pixel_data()
 	
-	for region_type in regions_type:
-		generation_region(region_type, image, pixel_color_dict, city_pixel_data)
+	for region in match_regions:
+		generation_region(region , image, pixel_color_dict, city_pixel_data)
 	print("Время load_regions: %d мкс" % (Time.get_ticks_usec() - start))
 
-func generation_region(region_type: Dictionary, image: Image, pixel_color_dict: Dictionary, city_pixel_data: Dictionary):
-	var start = Time.get_ticks_usec()
-	if not pixel_color_dict.has(region_type['color_recognition'].to_lower()):
-		push_error("Цвет региона '%s' не найден на изображении!" % region_type['color_recognition'].to_lower())
-		return
-	
-	var tscn_region = load("res://tscn/region.tscn").instantiate()
-	tscn_region = set_data_region(tscn_region, region_type)
-	regions.add_child(tscn_region)
-	
-	var polygons = get_polygons(image, region_type['color_recognition'].to_lower(), pixel_color_dict)
-	
-	if polygons.is_empty():
-		return
-	
-	# Находим самый большой полигон
-	var largest_polygon = null
-	var max_area = 0.0
-	
-	for polygon in polygons:
-		var area = calculate_polygon_area(polygon)
-		if area > max_area:
-			max_area = area
-			largest_polygon = polygon
-	
-	if largest_polygon != null:
-		# 1. Создаем VisualContainer (только для визуальных элементов)
-		var visual_container = Node2D.new()
-		visual_container.name = "VisualContainer"
-		tscn_region.add_child(visual_container)
-		
-		# 2. Добавляем город в VisualContainer
-		add_city_to_region(tscn_region, visual_container, pixel_color_dict[region_type['color_recognition'].to_lower()], city_pixel_data, region_type['name'])
-		
-		# 3. Добавляем CollisionPolygon2D
-		var region_collision = CollisionPolygon2D.new()
-		region_collision.polygon = largest_polygon
-		tscn_region.add_child(region_collision)
-		
-		# 4. Добавляем Polygon2D в VisualContainer
-		var region_polygon = Polygon2D.new()
-		region_polygon.polygon = largest_polygon
-		region_polygon.color = Color(region_type['color_view'].to_lower(), 0.15)
-		visual_container.add_child(region_polygon)
-		
-		# 5. Настраиваем материал
-		if region_polygon.material == null:
-			region_polygon.material = CanvasItemMaterial.new()
-			region_polygon.material.blend_mode = CanvasItemMaterial.BLEND_MODE_MIX
-			region_polygon.material.light_mode = CanvasItemMaterial.LIGHT_MODE_NORMAL
-		
-		# 6. Настраиваем VisibleOnScreenNotifier2D
-		var notifier = VisibleOnScreenNotifier2D.new()
-		var aabb = _calculate_polygon_aabb(largest_polygon)
-		notifier.position = aabb.position
-		notifier.rect = Rect2(Vector2.ZERO, aabb.size)
-		tscn_region.add_child(notifier)
-		
-		# 7. Подключаем сигналы
-		_setup_notifier_signals(notifier, visual_container, region_collision, tscn_region)
-		
-		# 8. Центрируем позицию
-		var image_size = regions_image.texture.get_size()
-		visual_container.position -= image_size / 2
-		region_collision.position -= image_size / 2
-		notifier.position -= image_size / 2
-		
-		# 9. Скрываем визуальную часть
-		visual_container.hide()
-	print("Время generation_region: %d мкс" % (Time.get_ticks_usec() - start))
 
-func set_data_region(tscn_region: Area2D, data_region: Dictionary) -> Area2D:
-	var start = Time.get_ticks_usec()
-	tscn_region.set_name(data_region['name'])
-	tscn_region.data = {
-		"id" : data_region['id'],
-		"name": data_region['name'],
-		#"flag" : JSON.parse_string(data_region['flag']),
-		'department': false
-	}
+# ---- Получение данных -----
+## Получить список регионов из матча
+func get_regions_for_match(match_id: int) -> Array:
+	var all_regions = []
 	
-	print("Время set_data_region: %d мкс" % (Time.get_ticks_usec() - start))
-	return tscn_region
+	# 1. Получаем все нации для этого матча
+	var nations = db.find_records('nations', 'match_id', match_id, [])
+	
+	for nation in nations:
+		# 2. Получаем всех игроков этой нации
+		var players = db.find_records('players', 'nation_id', nation.id, [])
+		
+		# 3. Получаем всех ботов этой нации
+		var bots = db.find_records('bots', 'nation_id', nation.id, [])
+		
+		# 4. Для каждого игрока получаем его страны
+		for player in players:
+			var countries = db.find_records('countries', 'player_id', player.id, [])
+			for country in countries:
+				# 5. Для каждой страны получаем провинции
+				var provinces = db.find_records('provinces', 'country_id', country.id, [])
+				for province in provinces:
+					# 6. Для каждой провинции получаем регионы
+					var regions = db.find_records('regions', 'province_id', province.id, [])
+					all_regions.append_array(regions)
+		
+		# 7. Для каждого бота получаем его страны
+		for bot in bots:
+			var countries = db.find_records('countries', 'bot_id', bot.id, [])
+			for country in countries:
+				# 8. Для каждой страны получаем провинции
+				var provinces = db.find_records('provinces', 'country_id', country.id, [])
+				for province in provinces:
+					# 9. Для каждой провинции получаем регионы
+					var regions = db.find_records('regions', 'province_id', province.id, [])
+					all_regions.append_array(regions)
+	
+	return all_regions
 
-# функция для получения данных городов
+## Получения данных городов
 func get_city_pixel_data() -> Dictionary:
 	var start = Time.get_ticks_usec()
 	
@@ -208,6 +154,198 @@ func get_city_pixel_data() -> Dictionary:
 	
 	print("Время get_city_pixel_data: %d мкс" % (Time.get_ticks_usec() - start))
 	return city_pixel_data
+
+
+# ----- Генерация -----
+## Генерирует регион
+func generation_region(region: Dictionary, image: Image, pixel_color_dict: Dictionary, city_pixel_data: Dictionary):
+	var start = Time.get_ticks_usec()
+	if not pixel_color_dict.has(region['color_recognition'].to_lower()):
+		push_error("Цвет региона '%s' не найден на изображении!" % region['color_recognition'].to_lower())
+		return
+	
+	var tscn_region = load("res://tscn/region.tscn").instantiate()
+	tscn_region = set_data_region(tscn_region, region)
+	regions_node.add_child(tscn_region)
+	
+	var polygons = get_polygons(image, region['color_recognition'].to_lower(), pixel_color_dict)
+	
+	if polygons.is_empty():
+		return
+	
+	# Находим самый большой полигон
+	var largest_polygon = null
+	var max_area = 0.0
+	
+	for polygon in polygons:
+		var area = calculate_polygon_area(polygon)
+		if area > max_area:
+			max_area = area
+			largest_polygon = polygon
+	
+	if largest_polygon != null:
+		# 1. Создаем VisualContainer (только для визуальных элементов)
+		var visual_container = Node2D.new()
+		visual_container.name = "VisualContainer"
+		tscn_region.add_child(visual_container)
+		
+		# 2. Добавляем город в VisualContainer
+		add_city_to_region(tscn_region, visual_container, pixel_color_dict[region['color_recognition'].to_lower()], city_pixel_data, region['name'])
+		
+		# 3. Добавляем CollisionPolygon2D
+		var region_collision = CollisionPolygon2D.new()
+		region_collision.polygon = largest_polygon
+		tscn_region.add_child(region_collision)
+		
+		# 4. Добавляем Polygon2D в VisualContainer
+		var region_polygon = Polygon2D.new()
+		region_polygon.polygon = largest_polygon
+		region_polygon.color = Color(region['color_view'].to_lower(), transparency_regions) # УСТАНОВКА ПРОЗРАЧНОСТИ
+		visual_container.add_child(region_polygon)
+		
+		# 4.5 Устанавливаем z-index для правильного порядка отрисовки
+		region_polygon.z_index = 0
+		
+		# 5. Добавляем границы региона
+		add_region_border(visual_container, largest_polygon, region)
+		
+		# 6. Настраиваем материал
+		if region_polygon.material == null:
+			region_polygon.material = CanvasItemMaterial.new()
+			region_polygon.material.blend_mode = CanvasItemMaterial.BLEND_MODE_MIX
+			region_polygon.material.light_mode = CanvasItemMaterial.LIGHT_MODE_NORMAL
+		
+		# 7. Настраиваем VisibleOnScreenNotifier2D
+		var notifier = VisibleOnScreenNotifier2D.new()
+		var aabb = _calculate_polygon_aabb(largest_polygon)
+		notifier.position = aabb.position
+		notifier.rect = Rect2(Vector2.ZERO, aabb.size)
+		tscn_region.add_child(notifier)
+		
+		# 8. Подключаем сигналы
+		_setup_notifier_signals(notifier, visual_container, region_collision, tscn_region)
+		
+		# 9. Центрируем позицию
+		var image_size = regions_image.texture.get_size()
+		visual_container.position -= image_size / 2
+		region_collision.position -= image_size / 2
+		notifier.position -= image_size / 2
+		
+		# 10. Скрываем визуальную часть
+		visual_container.hide()
+	print("Время generation_region: %d мкс" % (Time.get_ticks_usec() - start))
+
+## Функция для добавления границ региона
+func add_region_border(visual_container: Node2D, polygon: PackedVector2Array, region: Dictionary):
+	## Сначала упрощаем полигон чтобы уменьшить количество точек
+	var simplified_polygon = simplify_polygon(polygon, 0.4) # чем больше, тем больше точек удаляется
+	#
+	## Затем сглаживаем полигон
+	var smoothed_polygon = smooth_polygon(simplified_polygon, 0) # чем больше, тем плавнее, но может стать слишком "пухлым"
+	#
+	# --- ОСНОВНАЯ ГРАНИЦА РЕГИОНА ---
+	# Создаем Line2D для границы
+	var border_line = Line2D.new()
+	border_line.points = smoothed_polygon
+	border_line.width = 1  # Толщина границ региона
+	
+	# Цвет границы - темнее основного цвета
+	var border_color = Color(region['color_view'].to_lower()).darkened(0.4)
+	border_line.default_color = border_color
+	
+	# Делаем линию замкнутой
+	if smoothed_polygon.size() > 0:
+		border_line.add_point(smoothed_polygon[0])
+	
+	# Настройки для сглаживания
+	border_line.antialiased = true
+	#border_line.texture_mode = Line2D.LINE_TEXTURE_STRETCH
+	
+	# Добавляем границу в визуальный контейнер
+	visual_container.add_child(border_line)
+	
+	# --- ДОБАВЛЯЕМ БЕРЕГОВУЮ ТЕНЬ КАК ОБВОДКУ ---
+	# Создаем подложку теневую. для создания обьема
+	var shadow_outline = Line2D.new()
+	shadow_outline.points = smoothed_polygon
+	shadow_outline.width = 12.0  # Широкая тень-обводка
+	shadow_outline.default_color = Color(0.0, 0.1, 0.2, 0.55)  # Темно-синий, почти непрозрачный
+	shadow_outline.antialiased = true
+	shadow_outline.texture_mode = Line2D.LINE_TEXTURE_STRETCH
+	
+	# Делаем линию замкнутой
+	if smoothed_polygon.size() > 0:
+		shadow_outline.add_point(smoothed_polygon[0])
+	
+	# Добавляем тень ПОД всем
+	visual_container.add_child(shadow_outline)
+	shadow_outline.z_index = -1
+	
+	return border_line
+
+## Функция для упрощения полигона (уменьшение количества точек)
+func simplify_polygon(polygon: PackedVector2Array, tolerance: float = 0.3) -> PackedVector2Array:
+	if polygon.size() <= 3:
+		return polygon
+	
+	var result = PackedVector2Array()
+	result.append(polygon[0])
+	
+	for i in range(1, polygon.size() - 1):
+		var prev_point = polygon[i - 1]
+		var current_point = polygon[i]
+		var next_point = polygon[i + 1]
+		
+		# Проверяем расстояние до предыдущей точки
+		var distance_to_prev = current_point.distance_to(prev_point)
+		var distance_to_next = current_point.distance_to(next_point)
+		
+		# Если точка слишком близко к соседним, пропускаем её
+		if distance_to_prev > tolerance and distance_to_next > tolerance:
+			result.append(current_point)
+	
+	result.append(polygon[polygon.size() - 1])
+	return result
+
+## Функция для сглаживания полигона с помощью алгоритма Чайкина
+func smooth_polygon(polygon: PackedVector2Array, iterations: int = 1) -> PackedVector2Array:
+	if polygon.size() < 3 or iterations <= 0:
+		return polygon
+	
+	var current_polygon = polygon
+	
+	for iteration in range(iterations):
+		var smoothed = PackedVector2Array()
+		var n = current_polygon.size()
+		
+		for i in range(n):
+			var current = current_polygon[i]
+			var next = current_polygon[(i + 1) % n]
+			
+			# Правило Чайкина: 1/4 и 3/4 между точками
+			var q1 = current * 0.75 + next * 0.25
+			var q2 = current * 0.25 + next * 0.75
+			
+			smoothed.append(q1)
+			smoothed.append(q2)
+		
+		current_polygon = smoothed
+	
+	return current_polygon
+
+## Установка данных региону
+func set_data_region(tscn_region: Area2D, data_region: Dictionary) -> Area2D:
+	var start = Time.get_ticks_usec()
+	tscn_region.set_name(data_region['name'])
+	tscn_region.data = {
+		"id" : data_region['id'],
+		"name": data_region['name'],
+		#"flag" : JSON.parse_string(data_region['flag']),
+		'department': false
+	}
+	
+	print("Время set_data_region: %d мкс" % (Time.get_ticks_usec() - start))
+	return tscn_region
 
 func add_city_to_region(tscn_region: Area2D, visual_container: Node2D, region_pixels: Array, city_pixel_data: Dictionary, region_name: String):
 	var start = Time.get_ticks_usec()
@@ -256,13 +394,21 @@ func create_city_marker(tscn_region: Area2D, visual_container: Node2D, city_posi
 	visual_marker.z_index = 2
 	city_container.add_child(visual_marker)
 	
-	# 2. Добавляем коллизию
+	# 2. Добавляем иконку рядом с визуальным маркером
+	var city_icon = Sprite2D.new()
+	city_icon.name = "CityIcon"
+	city_icon.texture = load("res://image/icon/region/city.png")
+	city_icon.scale = Vector2(0.1, 0.1)
+	city_icon.z_index = 1
+	city_container.add_child(city_icon)
+	
+	# 3. Добавляем коллизию
 	var collision_marker = CollisionPolygon2D.new()
 	collision_marker.name = "Collision"
 	collision_marker.polygon = diamond_polygon
 	city_container.add_child(collision_marker)
 	
-	# 3. Добавляем подпись
+	# 4. Добавляем подпись
 	var label = Label.new()
 	label.name = "CityLabel"
 	label.text = region_name
@@ -276,7 +422,7 @@ func create_city_marker(tscn_region: Area2D, visual_container: Node2D, city_posi
 	
 	city_container.add_child(label)
 	
-	# 4. Добавляем кнопку создания филиала
+	# 5. Добавляем кнопку создания филиала
 	var create_branch_button = TextureButton.new()
 	create_branch_button.name = "create_branch"
 	create_branch_button.texture_normal = load("res://image/icon/region/sections/create_branch.png")
@@ -303,6 +449,7 @@ func calculate_region_center(pixels: Array) -> Vector2:
 	
 	print("Время calculate_region_center: %d мкс" % (Time.get_ticks_usec() - start))
 	return center / pixels.size()
+
 
 # Вспомогательная функция для расчета AABB полигона
 func _calculate_polygon_aabb(polygon: PackedVector2Array) -> Rect2:
@@ -353,11 +500,10 @@ func _setup_notifier_signals(notifier, visual_container, region_collision, new_r
 	)
 	print("Время _setup_notifier_signals: %d мкс" % (Time.get_ticks_usec() - start))
 
+
 # -----------------------
 # Вспомагательные функции
 # -----------------------
-
-
 func get_pixel_color_dict(image: Image) -> Dictionary:
 	var start = Time.get_ticks_usec()
 	
@@ -400,7 +546,6 @@ func get_pixel_color_dict(image: Image) -> Dictionary:
 	
 	print("Время get_pixel_color_dict: %d мкс" % (Time.get_ticks_usec() - start))
 	return color_dict
-
 
 # Функция для вычисления площади полигона (метод Гаусса)
 func calculate_polygon_area(polygon: PackedVector2Array) -> float:

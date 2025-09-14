@@ -15,12 +15,17 @@ extends Control
 
 # ---- Стабильные переменные ----
 var db: SQLiteHelper
+var format: Format
 var current_selected_good: TextureButton = null 
 
+
+# ---- Кнопки управления -----
 ## Открыть раздел склад
 func _on_warehouse_open_pressed():
 	if (player_node.info_region.warehouse.visible):
 		return
+	
+	format = Format.new()
 	
 	player_node.camera_2d.can_zoom = false
 	player_node.info_region.body.show()
@@ -28,6 +33,7 @@ func _on_warehouse_open_pressed():
 	player_node.info_region.production_tasks.hide()
 	player_node.info_region.staff_settings.hide()
 	player_node.info_region.warehouse.show()
+	player_node.info_region.stock.hide()
 	
 	clear_node(goods_list)
 	
@@ -48,6 +54,7 @@ func _on_warehouse_open_pressed():
 func clear_node(node):
 	for child in node.get_children():
 		child.queue_free()
+
 
 # ---- Возвращает данные ----
 ## Возвращает id товаров категории "продукт" и "материалы", которыми должен владеть компания по роду деятельности
@@ -151,7 +158,7 @@ func update_good_cells_list(good_id: int):
 		
 		# Создаем лейбл для цены
 		var cost_price_label = Label.new()
-		cost_price_label.text = str(cell['cost_price'])
+		cost_price_label.text = format.compact_float(cell['cost_price'])
 		cost_price_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		cost_price_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		cost_price_label.add_theme_font_size_override("font_size", 12)
@@ -159,7 +166,7 @@ func update_good_cells_list(good_id: int):
 		box.add_child(cost_price_label)
 		
 		var title = Label.new()
-		title.text = str(cell['cost_price'])
+		title.text = format.compact_float(cell['cost_price'])
 		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		title.add_theme_font_size_override("font_size", 10)
@@ -168,7 +175,7 @@ func update_good_cells_list(good_id: int):
 		
 		# Создаем лейбл для количества
 		var count_label = Label.new()
-		count_label.text = str(cell['count'])
+		count_label.text = format.compact_count(cell['count'])
 		count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		count_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		count_label.name = 'count'
@@ -199,7 +206,7 @@ func update_middle_cost_price_good():
 	
 	if total_count > 0:
 		var average_cost = total_cost / total_count
-		cost_price_middle_count.text = str(average_cost)
+		cost_price_middle_count.text = format.compact_float(average_cost)
 	else:
 		cost_price_middle_count.text = '0.0'
 

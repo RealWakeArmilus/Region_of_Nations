@@ -16,6 +16,9 @@ extends Camera2D
 @export var can_rotate: bool = false
 @export var can_keyboard: bool = true
 
+# Настройки моря
+@export var sea_color: Color = Color("#244D76")
+
 # Переменные состояния
 var target_zoom: Vector2 = Vector2.ONE       # Целевой зум для плавного изменения
 var touch_points: Dictionary = {}
@@ -26,10 +29,16 @@ var current_angle: float
 var last_drag_pos: Vector2 = Vector2.ZERO
 var is_dragging: bool = false
 
-
 func _ready():
 	start_zoom = zoom
 	target_zoom = zoom  # Инициализируем target_zoom текущим значением
+	
+	get_tree().root.transparent_bg = false
+	get_viewport().transparent_bg = false
+	RenderingServer.set_default_clear_color(sea_color)
+	
+	## Простые волны через периодическое изменение цвета
+	#create_simple_waves()
 
 func _physics_process(delta: float) -> void:
 	if can_keyboard:
@@ -42,6 +51,31 @@ func _physics_process(delta: float) -> void:
 		zoom = zoom.lerp(target_zoom, zoom_speed * delta)
 		zoom = zoom.clamp(Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
 
+
+# -------------------
+# Настройки фона моря
+# -------------------
+#func create_simple_waves():
+	## Анимируем цвет моря для эффекта волн
+	#var tween = create_tween()
+	#tween.set_loops()
+	#tween.tween_method(animate_sea_color, 0.0, 1.0, 2.0)
+#
+#func animate_sea_color(progress: float):
+	## Легкое изменение цвета для эффекта волн
+	#var variation = sin(progress * PI * 2) * 0.05
+	#var new_color = Color(
+		#sea_color.r + variation,
+		#sea_color.g + variation * 0.5, 
+		#sea_color.b + variation * 0.3,
+		#sea_color.a
+	#)
+	#RenderingServer.set_default_clear_color(new_color)
+
+
+# -------------------
+# Настройки камеры и ее перемещения
+# -------------------
 func _unhandled_input(event):
 	# Обработка ввода только если разрешено
 	if not can_pan and not can_zoom:
@@ -123,9 +157,9 @@ func get_angle(p1: Vector2, p2: Vector2) -> float:
 	return fmod((atan2(delta.y, delta.x) + PI), (2 * PI))
 
 
-#
-# Управление позицией нода темы музыки
-#
+# -------------------
+# Настройки музыки
+# -------------------
 
 func set_actual_position_match_theme_music():
 	match_theme_music.global_position = camera_2d.global_position

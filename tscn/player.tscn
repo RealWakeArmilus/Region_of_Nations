@@ -1,15 +1,15 @@
-[gd_scene load_steps=51 format=3 uid="uid://bqp7to6gmk3bv"]
+[gd_scene load_steps=55 format=3 uid="uid://bqp7to6gmk3bv"]
 
 [ext_resource type="Script" uid="uid://dnh6fl70gclx7" path="res://gd/cam.gd" id="1_7omxl"]
 [ext_resource type="Script" uid="uid://dkm2gfw6rv21i" path="res://gd/player.gd" id="1_wxvsy"]
 [ext_resource type="PackedScene" uid="uid://crfmdld5wm2gs" path="res://tscn/debugger.tscn" id="4_wxvsy"]
 [ext_resource type="Texture2D" uid="uid://2jkjran3arjy" path="res://image/figures/circle.png" id="5_42mp7"]
-[ext_resource type="Texture2D" uid="uid://co7pveapx56ur" path="res://image/figures/square_1.png" id="5_ovgu5"]
 [ext_resource type="Script" uid="uid://jjoxllug0id5" path="res://gd/menu.gd" id="5_wxvsy"]
 [ext_resource type="Texture2D" uid="uid://cnlutukehnkq" path="res://image/govarment.png" id="6_nhqjh"]
+[ext_resource type="Texture2D" uid="uid://b1uddh46epegm" path="res://image/avatar/1.png" id="7_2fh35"]
 [ext_resource type="Texture2D" uid="uid://jvrwpw2nj8ib" path="res://image/icon/specializations/2.png" id="7_k4k6l"]
 [ext_resource type="Texture2D" uid="uid://d2n4ssiw7kqc0" path="res://image/point.png" id="7_ne3il"]
-[ext_resource type="Texture2D" uid="uid://ddov1i67jdsd0" path="res://image/substrates/names.png" id="8_pq5ft"]
+[ext_resource type="Texture2D" uid="uid://dhdh2xn4vwnsg" path="res://image/icon/details/brain.png" id="8_g3rr5"]
 [ext_resource type="Texture2D" uid="uid://bt7h7iffuae11" path="res://image/settings.png" id="8_t3r7j"]
 [ext_resource type="Texture2D" uid="uid://be5ap3v1ugfxl" path="res://image/icon/button/plus.png" id="9_6k074"]
 [ext_resource type="Script" uid="uid://j5gkmu2tvucj" path="res://gd/info_region.gd" id="9_nhqjh"]
@@ -30,6 +30,9 @@
 [ext_resource type="Texture2D" uid="uid://b5yq4lflc6lxw" path="res://image/icon/specializations/4.png" id="19_i17s8"]
 [ext_resource type="Texture2D" uid="uid://cvwqjqxxbpbvl" path="res://image/substrates/button/classic.png" id="20_yi6n7"]
 [ext_resource type="Texture2D" uid="uid://dgy3j5htlsxaf" path="res://image/tap.png" id="22_48787"]
+[ext_resource type="Texture2D" uid="uid://bmdkmr74b2c2f" path="res://image/substrates/name_region.png" id="23_g3rr5"]
+[ext_resource type="Texture2D" uid="uid://cmajq8gjmg5ni" path="res://image/substrates/population.png" id="24_2fh35"]
+[ext_resource type="Texture2D" uid="uid://bfsescp1qgsmx" path="res://image/icon/details/people.png" id="25_aeu4j"]
 [ext_resource type="Script" uid="uid://dhpciruq2a2p5" path="res://gd/section_region/production_tasks.gd" id="25_k6qcm"]
 [ext_resource type="Texture2D" uid="uid://cwmsagmfu4js6" path="res://image/substrates/button/footnote.png" id="26_psry7"]
 [ext_resource type="Texture2D" uid="uid://b4ka6dqxe2a2b" path="res://image/substrates/button/footnote_white.png" id="26_q6lhy"]
@@ -48,6 +51,7 @@
 [ext_resource type="Texture2D" uid="uid://k0pxknx3d42y" path="res://image/substrates/button/footnot_square_black.png" id="37_xcri4"]
 [ext_resource type="Texture2D" uid="uid://cko5htchbqtd7" path="res://image/background/1.svg" id="39_s570w"]
 [ext_resource type="Texture2D" uid="uid://dhg20qtlij68c" path="res://image/substrates/region_section/warehouse/warehouse.png" id="40_rfryb"]
+[ext_resource type="Script" uid="uid://cfhbfe3oaovdt" path="res://gd/section_region/stock.gd" id="41_m31cp"]
 [ext_resource type="Texture2D" uid="uid://ommtjqwpdrgd" path="res://image/icon/region/sections/delete_branch.png" id="47_0d055"]
 
 [sub_resource type="FontVariation" id="FontVariation_rfryb"]
@@ -63,6 +67,11 @@ grow_vertical = 2
 script = ExtResource("1_wxvsy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -3500
+limit_top = -3500
+limit_right = 3500
+limit_bottom = 3500
+limit_smoothed = true
 script = ExtResource("1_7omxl")
 
 [node name="match_theme_music" type="AudioStreamPlayer2D" parent="Camera2D"]
@@ -93,39 +102,51 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="account" type="BoxContainer" parent="UI/menu/head"]
-custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 vertical = true
 
-[node name="player" type="Control" parent="UI/menu/head/account"]
-custom_minimum_size = Vector2(300, 100)
+[node name="player" type="BoxContainer" parent="UI/menu/head/account"]
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_constants/separation = 50
 
-[node name="HBC" type="HBoxContainer" parent="UI/menu/head/account/player"]
-custom_minimum_size = Vector2(300, 60)
+[node name="info" type="BoxContainer" parent="UI/menu/head/account/player"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+vertical = true
+
+[node name="username" type="TextureRect" parent="UI/menu/head/account/player/info"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+texture = ExtResource("24_2fh35")
+expand_mode = 1
+flip_v = true
+
+[node name="text" type="Label" parent="UI/menu/head/account/player/info/username"]
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -50.0
-offset_right = 200.0
-offset_bottom = 50.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
-theme_override_constants/separation = 0
+theme_override_font_sizes/font_size = 12
+text = "-"
+horizontal_alignment = 1
 
-[node name="avatar" type="TextureRect" parent="UI/menu/head/account/player/HBC"]
-custom_minimum_size = Vector2(100, 100)
+[node name="avatar" type="Panel" parent="UI/menu/head/account/player/info"]
+custom_minimum_size = Vector2(125, 125)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("5_ovgu5")
-expand_mode = 1
 
-[node name="substrate" type="TextureRect" parent="UI/menu/head/account/player/HBC/avatar"]
+[node name="substrate" type="TextureRect" parent="UI/menu/head/account/player/info/avatar"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 15
@@ -136,123 +157,119 @@ grow_vertical = 2
 texture = ExtResource("5_42mp7")
 expand_mode = 1
 
-[node name="icon" type="TextureRect" parent="UI/menu/head/account/player/HBC/avatar/substrate"]
+[node name="icon" type="TextureRect" parent="UI/menu/head/account/player/info/avatar/substrate"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("7_2fh35")
+expand_mode = 1
 
-[node name="info" type="BoxContainer" parent="UI/menu/head/account/player/HBC"]
+[node name="nation" type="TextureRect" parent="UI/menu/head/account/player/info"]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 0
-vertical = true
+texture = ExtResource("24_2fh35")
+expand_mode = 1
 
-[node name="username" type="TextureRect" parent="UI/menu/head/account/player/HBC/info"]
-custom_minimum_size = Vector2(200, 40)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("8_pq5ft")
-
-[node name="HBC" type="HBoxContainer" parent="UI/menu/head/account/player/HBC/info/username"]
-custom_minimum_size = Vector2(184, 0)
+[node name="text" type="Label" parent="UI/menu/head/account/player/info/nation"]
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -92.0
-offset_top = -8.5
-offset_right = 92.0
-offset_bottom = 8.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 5
-
-[node name="title" type="Label" parent="UI/menu/head/account/player/HBC/info/username/HBC"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
-text = "Username:"
-vertical_alignment = 1
-
-[node name="text" type="Label" parent="UI/menu/head/account/player/HBC/info/username/HBC"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "-"
-vertical_alignment = 1
+horizontal_alignment = 1
 
-[node name="nation" type="TextureRect" parent="UI/menu/head/account/player/HBC/info"]
-custom_minimum_size = Vector2(200, 40)
+[node name="brain" type="Panel" parent="UI/menu/head/account/player"]
+custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("8_pq5ft")
-flip_v = true
+size_flags_vertical = 0
 
-[node name="HBC" type="HBoxContainer" parent="UI/menu/head/account/player/HBC/info/nation"]
-custom_minimum_size = Vector2(184, 0)
+[node name="count" type="Label" parent="UI/menu/head/account/player/brain"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -92.0
-offset_top = -8.5
-offset_right = 92.0
-offset_bottom = 8.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 5
-
-[node name="title" type="Label" parent="UI/menu/head/account/player/HBC/info/nation/HBC"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
-text = "Nation:"
+theme_override_font_sizes/font_size = 20
+text = "0"
 vertical_alignment = 1
 
-[node name="text" type="Label" parent="UI/menu/head/account/player/HBC/info/nation/HBC"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
-text = "-"
-vertical_alignment = 1
+[node name="icon" type="TextureRect" parent="UI/menu/head/account/player/brain"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 40.0
+offset_bottom = 30.0
+grow_vertical = 2
+texture = ExtResource("8_g3rr5")
+expand_mode = 1
 
-[node name="avatars" type="Control" parent="UI/menu/head/account"]
-custom_minimum_size = Vector2(300, 100)
+[node name="info" type="VBoxContainer" parent="UI/menu/head"]
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 10
 
-[node name="slot_1" type="HBoxContainer" parent="UI/menu/head/account/avatars"]
-custom_minimum_size = Vector2(280, 60)
+[node name="time_world" type="Panel" parent="UI/menu/head/info"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="details" type="HBoxContainer" parent="UI/menu/head/info/time_world"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -33.0
-offset_right = -20.0
-offset_bottom = 47.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="months" type="HBoxContainer" parent="UI/menu/head/info/time_world/details"]
+layout_mode = 2
+
+[node name="count" type="Label" parent="UI/menu/head/info/time_world/details/months"]
+layout_mode = 2
+text = "01"
+
+[node name="title" type="Label" parent="UI/menu/head/info/time_world/details/months"]
+layout_mode = 2
+text = "M."
+
+[node name="years" type="HBoxContainer" parent="UI/menu/head/info/time_world/details"]
+layout_mode = 2
+
+[node name="count" type="Label" parent="UI/menu/head/info/time_world/details/years"]
+layout_mode = 2
+text = "01"
+
+[node name="title" type="Label" parent="UI/menu/head/info/time_world/details/years"]
+layout_mode = 2
+text = "Y."
+
+[node name="avatars" type="HBoxContainer" parent="UI/menu/head/info"]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 10
 
-[node name="avatar" type="TextureRect" parent="UI/menu/head/account/avatars/slot_1"]
+[node name="1" type="TextureRect" parent="UI/menu/head/info/avatars"]
 self_modulate = Color(0.000121578, 0.013572, 0.155609, 1)
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
@@ -261,7 +278,7 @@ size_flags_vertical = 4
 texture = ExtResource("5_42mp7")
 expand_mode = 1
 
-[node name="icon" type="TextureRect" parent="UI/menu/head/account/avatars/slot_1/avatar"]
+[node name="icon" type="TextureRect" parent="UI/menu/head/info/avatars/1"]
 visible = false
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 1
@@ -279,7 +296,7 @@ grow_vertical = 2
 texture = ExtResource("7_k4k6l")
 expand_mode = 1
 
-[node name="create_activity" type="TextureButton" parent="UI/menu/head/account/avatars/slot_1/avatar"]
+[node name="create_activity" type="TextureButton" parent="UI/menu/head/info/avatars/1"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 1
 anchors_preset = 8
@@ -297,133 +314,93 @@ texture_normal = ExtResource("9_6k074")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/menu/head"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-mouse_filter = 2
-theme_override_constants/separation = 10
-
-[node name="time_world" type="Panel" parent="UI/menu/head/VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-
-[node name="details" type="HBoxContainer" parent="UI/menu/head/VBoxContainer/time_world"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 5
-alignment = 1
-
-[node name="months" type="HBoxContainer" parent="UI/menu/head/VBoxContainer/time_world/details"]
-layout_mode = 2
-
-[node name="count" type="Label" parent="UI/menu/head/VBoxContainer/time_world/details/months"]
-layout_mode = 2
-text = "01"
-
-[node name="title" type="Label" parent="UI/menu/head/VBoxContainer/time_world/details/months"]
-layout_mode = 2
-text = "M."
-
-[node name="years" type="HBoxContainer" parent="UI/menu/head/VBoxContainer/time_world/details"]
-layout_mode = 2
-
-[node name="count" type="Label" parent="UI/menu/head/VBoxContainer/time_world/details/years"]
-layout_mode = 2
-text = "01"
-
-[node name="title" type="Label" parent="UI/menu/head/VBoxContainer/time_world/details/years"]
-layout_mode = 2
-text = "Y."
-
-[node name="company_info" type="Panel" parent="UI/menu/head/VBoxContainer"]
+[node name="company" type="Panel" parent="UI/menu/head/info"]
 visible = false
-custom_minimum_size = Vector2(200, 80)
+custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 
-[node name="title" type="Panel" parent="UI/menu/head/VBoxContainer/company_info"]
+[node name="title" type="Panel" parent="UI/menu/head/info/company"]
+custom_minimum_size = Vector2(250, 30)
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -100.0
-offset_right = 100.0
-offset_bottom = 20.0
-grow_horizontal = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_bottom = 30.0
+grow_horizontal = 0
 
-[node name="title" type="Label" parent="UI/menu/head/VBoxContainer/company_info/title"]
+[node name="title" type="Label" parent="UI/menu/head/info/company/title"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "Инфомрация о компании"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="details" type="VBoxContainer" parent="UI/menu/head/VBoxContainer/company_info"]
+[node name="details" type="VBoxContainer" parent="UI/menu/head/info/company"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -92.0
-offset_top = -13.0
-offset_right = 92.0
-offset_bottom = 31.0
+offset_left = -100.0
+offset_top = -10.0
+offset_right = 100.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="name" type="HBoxContainer" parent="UI/menu/head/VBoxContainer/company_info/details"]
+[node name="name" type="HBoxContainer" parent="UI/menu/head/info/company/details"]
 custom_minimum_size = Vector2(184, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="title" type="Label" parent="UI/menu/head/VBoxContainer/company_info/details/name"]
+[node name="title" type="Label" parent="UI/menu/head/info/company/details/name"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "Name:"
 vertical_alignment = 1
 
-[node name="text" type="Label" parent="UI/menu/head/VBoxContainer/company_info/details/name"]
+[node name="text" type="Label" parent="UI/menu/head/info/company/details/name"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "-"
 vertical_alignment = 1
 
-[node name="speciality" type="HBoxContainer" parent="UI/menu/head/VBoxContainer/company_info/details"]
+[node name="speciality" type="HBoxContainer" parent="UI/menu/head/info/company/details"]
 custom_minimum_size = Vector2(184, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="title" type="Label" parent="UI/menu/head/VBoxContainer/company_info/details/speciality"]
+[node name="title" type="Label" parent="UI/menu/head/info/company/details/speciality"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "Speciality:"
 vertical_alignment = 1
 
-[node name="text" type="Label" parent="UI/menu/head/VBoxContainer/company_info/details/speciality"]
+[node name="text" type="Label" parent="UI/menu/head/info/company/details/speciality"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "-"
 vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="UI/menu/head"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="create_panel" type="Panel" parent="UI/menu"]
 visible = false
@@ -856,13 +833,15 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_constants/separation = 0
 
-[node name="name_region" type="Panel" parent="UI/info_region/head/HBC/VBC"]
+[node name="name_region" type="TextureRect" parent="UI/info_region/head/HBC/VBC"]
 custom_minimum_size = Vector2(300, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
+texture = ExtResource("23_g3rr5")
 
 [node name="label" type="Label" parent="UI/info_region/head/HBC/VBC/name_region"]
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -874,11 +853,12 @@ text = "Name region"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="total_population" type="Panel" parent="UI/info_region/head/HBC/VBC"]
+[node name="total_population" type="TextureRect" parent="UI/info_region/head/HBC/VBC"]
 custom_minimum_size = Vector2(240, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
+texture = ExtResource("24_2fh35")
 
 [node name="details" type="HBoxContainer" parent="UI/info_region/head/HBC/VBC/total_population"]
 layout_mode = 1
@@ -887,15 +867,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 5
 alignment = 1
 
 [node name="icon" type="TextureRect" parent="UI/info_region/head/HBC/VBC/total_population/details"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("25_aeu4j")
 expand_mode = 1
+stretch_mode = 2
 
 [node name="count" type="Label" parent="UI/info_region/head/HBC/VBC/total_population/details"]
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 12
 text = "..."
 
@@ -913,6 +900,7 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="center" type="Panel" parent="UI/info_region"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -927,7 +915,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="body" type="Control" parent="UI/info_region"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1977,13 +1964,13 @@ custom_minimum_size = Vector2(674, 64)
 layout_mode = 2
 
 [node name="stock" type="Control" parent="UI/info_region/body/container/substrates"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("41_m31cp")
 
 [node name="head" type="MarginContainer" parent="UI/info_region/body/container/substrates/stock"]
 layout_mode = 2
@@ -2000,19 +1987,24 @@ theme_override_font_sizes/font_size = 28
 text = "Биржа"
 vertical_alignment = 1
 
-[node name="goods" type="HBoxContainer" parent="UI/info_region/body/container/substrates/stock"]
-layout_mode = 2
+[node name="scroll" type="ScrollContainer" parent="UI/info_region/body/container/substrates/stock"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 102.0
 offset_right = 515.0
 offset_bottom = 146.0
+script = ExtResource("13_3p1t6")
+scroll_direction = 1
+
+[node name="goods" type="HBoxContainer" parent="UI/info_region/body/container/substrates/stock/scroll"]
+layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="0" type="TextureButton" parent="UI/info_region/body/container/substrates/stock/goods"]
+[node name="0" type="TextureButton" parent="UI/info_region/body/container/substrates/stock/scroll/goods"]
 layout_mode = 2
 texture_normal = ExtResource("35_4g6tj")
 
-[node name="icon" type="TextureRect" parent="UI/info_region/body/container/substrates/stock/goods/0"]
+[node name="icon" type="TextureRect" parent="UI/info_region/body/container/substrates/stock/scroll/goods/0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2022,11 +2014,11 @@ grow_vertical = 2
 texture = ExtResource("36_n6dg5")
 expand_mode = 1
 
-[node name="1" type="TextureButton" parent="UI/info_region/body/container/substrates/stock/goods"]
+[node name="1" type="TextureButton" parent="UI/info_region/body/container/substrates/stock/scroll/goods"]
 layout_mode = 2
 texture_normal = ExtResource("37_xcri4")
 
-[node name="icon" type="TextureRect" parent="UI/info_region/body/container/substrates/stock/goods/1"]
+[node name="icon" type="TextureRect" parent="UI/info_region/body/container/substrates/stock/scroll/goods/1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2053,34 +2045,35 @@ grow_vertical = 2
 texture = ExtResource("39_s570w")
 expand_mode = 1
 
-[node name="open_stock" type="TextureButton" parent="UI/info_region/body/container/substrates/stock"]
-self_modulate = Color(0.772549, 0.745098, 0.658824, 1)
+[node name="market_rate" type="HBoxContainer" parent="UI/info_region/body/container/substrates/stock/background"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -110.0
-offset_top = -55.0
-offset_right = 110.0
-offset_bottom = -15.0
-grow_horizontal = 2
+offset_left = 22.0
+offset_top = -28.0
+offset_right = 138.0
+offset_bottom = -8.0
 grow_vertical = 0
-texture_normal = ExtResource("20_yi6n7")
+theme_override_constants/separation = 2
 
-[node name="Label" type="Label" parent="UI/info_region/body/container/substrates/stock/open_stock"]
+[node name="title" type="Label" parent="UI/info_region/body/container/substrates/stock/background/market_rate"]
 self_modulate = Color(0.254902, 0.243137, 0.207843, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 16
-text = "Биржа"
-horizontal_alignment = 1
-vertical_alignment = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Рыночная цена:"
+
+[node name="count" type="Label" parent="UI/info_region/body/container/substrates/stock/background/market_rate"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0"
+
+[node name="$" type="Label" parent="UI/info_region/body/container/substrates/stock/background/market_rate"]
+self_modulate = Color(0.396078, 0.376471, 0.321569, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "$"
 
 [node name="good" type="MarginContainer" parent="UI/info_region/body/container/substrates/stock"]
 custom_minimum_size = Vector2(698, 37)
@@ -2131,7 +2124,7 @@ vertical = true
 
 [node name="total_count" type="HBoxContainer" parent="UI/info_region/body/container/substrates/stock/good/warehouse"]
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 5
 alignment = 2
 
 [node name="count" type="Label" parent="UI/info_region/body/container/substrates/stock/good/warehouse/total_count"]
@@ -2184,6 +2177,146 @@ size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 10
 text = "себестоимость"
 horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="background2" type="TextureRect" parent="UI/info_region/body/container/substrates/stock"]
+self_modulate = Color(0.113725, 0.105882, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.0
+offset_top = -19.0
+offset_right = 368.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("39_s570w")
+expand_mode = 1
+
+[node name="trading_glass" type="MarginContainer" parent="UI/info_region/body/container/substrates/stock/background2"]
+custom_minimum_size = Vector2(0, 271)
+layout_mode = 0
+offset_right = 742.0
+offset_bottom = 271.0
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = 19
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = 9
+
+[node name="body" type="VBoxContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="head" type="VBoxContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="titles" type="HBoxContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="buy" type="Label" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head/titles"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Покупка"
+
+[node name="sell" type="Label" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head/titles"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Продажа"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="scroll" type="ScrollContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head"]
+custom_minimum_size = Vector2(0, 175)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("13_3p1t6")
+delete_vertical_scroll_mode = true
+
+[node name="list" type="BoxContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head/scroll"]
+custom_minimum_size = Vector2(0, 175)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="buy" type="VBoxContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head/scroll/list"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="sell" type="VBoxContainer" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/head/scroll/list"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="buttons" type="Control" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="sell_open" type="TextureButton" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/buttons"]
+custom_minimum_size = Vector2(210, 25)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -12.5
+offset_right = 210.0
+offset_bottom = 17.5
+grow_vertical = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("20_yi6n7")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/buttons/sell_open"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Продать"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="buy_open" type="TextureButton" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/buttons"]
+self_modulate = Color(0, 0.219608, 0.937255, 1)
+custom_minimum_size = Vector2(210, 25)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -12.5
+offset_bottom = 17.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+texture_normal = ExtResource("20_yi6n7")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/info_region/body/container/substrates/stock/background2/trading_glass/body/buttons/buy_open"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Купить"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="close_all_sections" type="TextureButton" parent="UI/info_region/body/container"]
@@ -2377,7 +2510,6 @@ texture_normal = ExtResource("13_k4k6l")
 ignore_texture_size = true
 
 [node name="finance" type="TextureButton" parent="UI/info_region/basement/section_company"]
-visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("14_pq5ft")
@@ -2404,9 +2536,19 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("22_48787")
 
 [node name="Debugger" parent="UI" instance=ExtResource("4_wxvsy")]
-offset_bottom = 202.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = -202.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
 
-[connection signal="pressed" from="UI/menu/head/account/avatars/slot_1/avatar/create_activity" to="UI/menu" method="_on_create_activity_pressed"]
+[connection signal="pressed" from="UI/menu/head/info/avatars/1/create_activity" to="UI/menu" method="_on_create_activity_pressed"]
 [connection signal="pressed" from="UI/menu/create_panel/head/close" to="UI/menu" method="_on_close_activity_pressed"]
 [connection signal="pressed" from="UI/menu/create_panel/body/button/create" to="UI/menu/create_panel" method="_on_create_pressed"]
 [connection signal="pressed" from="UI/menu/buttons/rating_nations/button" to="UI/menu" method="_open_rating_nations_pressed"]
@@ -2427,3 +2569,4 @@ offset_bottom = 202.0
 [connection signal="pressed" from="UI/info_region/body/container/staff/setting" to="UI/info_region/body/container/substrates/staff_settings" method="_on_staff_setting_open_pressed"]
 [connection signal="pressed" from="UI/info_region/basement/section_company/production" to="UI/info_region/body/container/substrates/production_tasks" method="_on_production_pressed"]
 [connection signal="pressed" from="UI/info_region/basement/section_company/warehouse" to="UI/info_region/body/container/substrates/warehouse" method="_on_warehouse_open_pressed"]
+[connection signal="pressed" from="UI/info_region/basement/section_company/stoke" to="UI/info_region/body/container/substrates/stock" method="_on_stoke_open_pressed"]

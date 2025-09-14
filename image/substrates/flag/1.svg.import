@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc70f4jbsdaje"
-path="res://.godot/imported/city.png-81e7d0470e4da27341efe45b23f6b840.ctex"
+uid="uid://ynq0atfd6kay"
+path="res://.godot/imported/1.svg-fdf45aa5b7d717e0f14d3beb3e94dec4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://image/icon/region/city.png"
-dest_files=["res://.godot/imported/city.png-81e7d0470e4da27341efe45b23f6b840.ctex"]
+source_file="res://image/substrates/flag/1.svg"
+dest_files=["res://.godot/imported/1.svg-fdf45aa5b7d717e0f14d3beb3e94dec4.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

@@ -211,7 +211,8 @@ func _generate_nation_data(match_id: int, nation_type: Dictionary, professions_t
 			##create_profitability_of_goods_in_regions_batch(match_id, data_match['date']['general']['profitability_of_goods_in_regions'], records_regions, goods_type)
 			
 			print('professions_type: ', professions_type)
-			db.create_population_groups_batch(match_id, records_regions, nation['record'], professions_type)
+			var population_groups = db.create_population_groups_batch(match_id, records_regions, nation['record'], professions_type)
+			#print('population_groups: ', population_groups)
 			for _i in range(0, 10):
 				var records_companies = db.create_company_batch(match_id, nation['record'], specializations)
 				var _records_company_departments = db.create_company_departments_batch(match_id, records_companies, records_regions)
@@ -788,7 +789,7 @@ func add_player_from_my_client(match_id: int):
 		"username": client['username'],
 		"unique_id": client['id'],
 		"nation_id": nations['id'],
-		"intellect": 0,
+		"brain": 50,
 		"budget": 50_000
 	}
 	

@@ -38,6 +38,7 @@ func info_region_hide():
 	info_region.production_tasks.hide()
 	info_region.staff_settings.hide()
 	info_region.warehouse.hide()
+	info_region.stock.hide()
 
 
 #
@@ -46,12 +47,13 @@ func info_region_hide():
 
 func get_player_info() -> Dictionary:
 	var start = Time.get_ticks_usec()
-	var player = (db.find_records('players', 'is_my_client', true, ['id', 'username', 'nation_id'], 1))[0]
+	var player = (db.find_records('players', 'is_my_client', true, ['id', 'username', 'nation_id', "brain", "budget"], 1))[0]
 	var nation = (db.find_records_by_params('nations', {'id': player['nation_id']}, ['id', 'name'], 1))[0]
 	var company = db.find_records_by_params('companies', {'player_id': player['id']}, ['id', 'name', 'speciality_id'], 1)
 	
 	menu.player_username.text = str(player['username'])
 	menu.player_nation.text = str(nation['name'])
+	menu.player_brain_count.text = str(player['brain'])
 	
 	if company:
 		print('Компания есть')

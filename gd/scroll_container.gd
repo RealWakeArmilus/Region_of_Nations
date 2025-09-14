@@ -6,6 +6,7 @@ enum ScrollDirection {
 }
 
 @export var scroll_direction: ScrollDirection = ScrollDirection.VERTICAL
+@export var delete_vertical_scroll_mode = false
 @export var drag_speed: float = 1.0
 @export var wheel_speed: int = 30
 
@@ -25,7 +26,8 @@ func _ready():
 	match scroll_direction:
 		ScrollDirection.VERTICAL:
 			horizontal_scroll_mode = SCROLL_MODE_SHOW_NEVER
-			#vertical_scroll_mode = SCROLL_MODE_SHOW_NEVER
+			if delete_vertical_scroll_mode:
+				vertical_scroll_mode = SCROLL_MODE_SHOW_NEVER
 			#print(name, ": Режим вертикального скролла")
 		ScrollDirection.HORIZONTAL:
 			vertical_scroll_mode = SCROLL_MODE_SHOW_NEVER

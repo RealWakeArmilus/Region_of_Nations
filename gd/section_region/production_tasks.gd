@@ -384,6 +384,7 @@ func _on_production_pressed():
 	player_node.info_region.staff_info.show()
 	player_node.info_region.staff_settings_button.show()
 	player_node.info_region.warehouse.hide()
+	player_node.info_region.stock.hide()
 	
 	update_active_filter_buttons(all_tasks_button)
 	filter_task.show()
